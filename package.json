@@ -1,0 +1,48 @@
+{
+  "name": "@orgasm-dev/device",
+  "version": "0.1.0",
+  "description": "The orgasm.dev device SDK: verify the enclave's attestation, seal every request to it, and publish the front camera and microphone straight to it.",
+  "license": "Apache-2.0",
+  "type": "module",
+  "homepage": "https://orgasm.dev/docs/guides/live-sessions",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Orgasm-dev/device-sdk.git"
+  },
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    }
+  },
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "files": [
+    "dist",
+    "src",
+    "LICENSE",
+    "NOTICE",
+    "README.md"
+  ],
+  "sideEffects": false,
+  "scripts": {
+    "build": "tsc -p tsconfig.build.json",
+    "typecheck": "tsc --noEmit && tsc --noEmit -p tsconfig.test.json",
+    "test": "vitest run",
+    "policy": "node scripts/policy.mjs tree",
+    "check": "npm run typecheck && npm test && npm run build && npm run policy",
+    "prepare": "npm run build"
+  },
+  "devDependencies": {
+    "@types/node": "^22.20.5",
+    "typescript": "^5.9.2",
+    "vitest": "^3.2.4"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "publishConfig": {
+    "access": "public",
+    "provenance": true
+  }
+}
