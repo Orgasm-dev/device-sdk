@@ -1,11 +1,13 @@
 name: release
 
-# Tag vX.Y.Z (the version in package.json) and this publishes that version to
+# Tag vX.Y.Z (the version in package.json) and this stages that version on
 # npm from the tagged tree, with npm's provenance: a signed statement, in the
 # public transparency log, that this workflow built the package from this
-# repository at this tag. `npm audit signatures` checks it on install.
+# repository at this tag. `npm audit signatures` checks it on install. A
+# staged version goes live only when a maintainer approves it on npmjs.com
+# with two-factor authentication.
 #
-# The publish authenticates as the package's trusted publisher (this
+# The stage authenticates as the package's trusted publisher (this
 # workflow, configured on npmjs.com), or with the NPM_TOKEN secret when one
 # is set.
 
@@ -32,7 +34,7 @@ jobs:
         run: test "v$(node -p 'require("./package.json").version')" = "${GITHUB_REF_NAME}"
       - run: npm ci
       - run: npm run check
-      - name: Publish with provenance
+      - name: Stage with provenance
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
-        run: npm publish --provenance --access public
+        run: npm stage publish --provenance --access public

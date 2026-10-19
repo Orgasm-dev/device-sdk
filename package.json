@@ -1,6 +1,6 @@
 {
   "name": "@orgasm-dev/device",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "The orgasm.dev device SDK: verify the enclave's attestation, seal every request to it, and publish the front camera and microphone straight to it.",
   "license": "Apache-2.0",
   "type": "module",
