@@ -10,11 +10,7 @@ It is the first place your users' video goes, so it is published for you to read
 npm install @orgasm-dev/device
 ```
 
-Each release is built and published from a tag of this repository by its [release workflow](.github/workflows/release.yml), with npm's provenance: `npm audit signatures` checks that the package you installed was built here, at that tag. Until the first release is on npm, install it straight from this repository, which builds it on install; add `#<commit>` to pin the commit you read:
-
-```sh
-npm install github:Orgasm-dev/device-sdk
-```
+Each release is built and published from a tag of this repository by its [release workflow](.github/workflows/release.yml), with npm's provenance: `npm audit signatures` checks that the package you installed was built here, at that tag.
 
 ## Use
 
