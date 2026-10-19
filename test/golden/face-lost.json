@@ -1,0 +1,806 @@
+[
+ {
+  "atS": 0,
+  "phase": "calibrating",
+  "detail": "Baseline in 0:59",
+  "percent": null,
+  "p60": null,
+  "counts": {
+   "orgasms": 0,
+   "ruins": 0,
+   "edges": 0
+  },
+  "clock": "0:00",
+  "notices": [],
+  "marks": [],
+  "analysing": true
+ },
+ {
+  "atS": 15,
+  "phase": "calibrating",
+  "detail": "Baseline in 0:44",
+  "percent": null,
+  "p60": null,
+  "counts": {
+   "orgasms": 0,
+   "ruins": 0,
+   "edges": 0
+  },
+  "clock": "0:15",
+  "notices": [],
+  "marks": [],
+  "analysing": true
+ },
+ {
+  "atS": 30,
+  "phase": "calibrating",
+  "detail": "Baseline in 0:29",
+  "percent": null,
+  "p60": null,
+  "counts": {
+   "orgasms": 0,
+   "ruins": 0,
+   "edges": 0
+  },
+  "clock": "0:30",
+  "notices": [],
+  "marks": [],
+  "analysing": true
+ },
+ {
+  "atS": 45,
+  "phase": "calibrating",
+  "detail": "Baseline in 0:14",
+  "percent": null,
+  "p60": null,
+  "counts": {
+   "orgasms": 0,
+   "ruins": 0,
+   "edges": 0
+  },
+  "clock": "0:45",
+  "notices": [],
+  "marks": [],
+  "analysing": true
+ },
+ {
+  "atS": 60,
+  "phase": "calibrating",
+  "detail": "Getting your baseline",
+  "percent": null,
+  "p60": null,
+  "counts": {
+   "orgasms": 0,
+   "ruins": 0,
+   "edges": 0
+  },
+  "clock": "1:00",
+  "notices": [],
+  "marks": [],
+  "analysing": true
+ },
+ {
+  "atS": 75,
+  "phase": "building",
+  "detail": "2% within 30 s",
+  "percent": 2,
+  "p60": 0.041,
+  "counts": {
+   "orgasms": 0,
+   "ruins": 0,
+   "edges": 0
+  },
+  "clock": "1:15",
+  "notices": [],
+  "marks": [],
+  "analysing": true
+ },
+ {
+  "atS": 90,
+  "phase": "building",
+  "detail": "2% within 30 s",
+  "percent": 2,
+  "p60": 0.039,
+  "counts": {
+   "orgasms": 0,
+   "ruins": 0,
+   "edges": 0
+  },
+  "clock": "1:30",
+  "notices": [],
+  "marks": [],
+  "analysing": true
+ },
+ {
+  "atS": 105,
+  "phase": "building",
+  "detail": "3% within 30 s",
+  "percent": 3,
+  "p60": 0.055,
+  "counts": {
+   "orgasms": 0,
+   "ruins": 0,
+   "edges": 0
+  },
+  "clock": "1:45",
+  "notices": [],
+  "marks": [],
+  "analysing": true
+ },
+ {
+  "atS": 120,
+  "phase": "building",
+  "detail": "3% within 30 s",
+  "percent": 3,
+  "p60": 0.058,
+  "counts": {
+   "orgasms": 0,
+   "ruins": 0,
+   "edges": 0
+  },
+  "clock": "2:00",
+  "notices": [],
+  "marks": [],
+  "analysing": true
+ },
+ {
+  "atS": 135,
+  "phase": "building",
+  "detail": "3% within 30 s",
+  "percent": 3,
+  "p60": 0.062,
+  "counts": {
+   "orgasms": 0,
+   "ruins": 0,
+   "edges": 0
+  },
+  "clock": "2:15",
+  "notices": [],
+  "marks": [],
+  "analysing": true
+ },
+ {
+  "atS": 150,
+  "phase": "building",
+  "detail": "4% within 30 s",
+  "percent": 4,
+  "p60": 0.075,
+  "counts": {
+   "orgasms": 0,
+   "ruins": 0,
+   "edges": 0
+  },
+  "clock": "2:30",
+  "notices": [],
+  "marks": [],
+  "analysing": true
+ },
+ {
+  "atS": 165,
+  "phase": "building",
+  "detail": "4% within 30 s",
+  "percent": 4,
+  "p60": 0.077,
+  "counts": {
+   "orgasms": 0,
+   "ruins": 0,
+   "edges": 0
+  },
+  "clock": "2:45",
+  "notices": [],
+  "marks": [],
+  "analysing": true
+ },
+ {
+  "atS": 180,
+  "phase": "building",
+  "detail": "4% within 30 s",
+  "percent": 4,
+  "p60": 0.075,
+  "counts": {
+   "orgasms": 0,
+   "ruins": 0,
+   "edges": 0
+  },
+  "clock": "3:00",
+  "notices": [],
+  "marks": [],
+  "analysing": true
+ },
+ {
+  "atS": 195,
+  "phase": "building",
+  "detail": "5% within 30 s",
+  "percent": 5,
+  "p60": 0.09,
+  "counts": {
+   "orgasms": 0,
+   "ruins": 0,
+   "edges": 0
+  },
+  "clock": "3:15",
+  "notices": [],
+  "marks": [],
+  "analysing": true
+ },
+ {
+  "atS": 210,
+  "phase": "building",
+  "detail": "4% within 30 s",
+  "percent": 4,
+  "p60": 0.086,
+  "counts": {
+   "orgasms": 0,
+   "ruins": 0,
+   "edges": 0
+  },
+  "clock": "3:30",
+  "notices": [],
+  "marks": [],
+  "analysing": true
+ },
+ {
+  "atS": 225,
+  "phase": "building",
+  "detail": "5% within 30 s",
+  "percent": 5,
+  "p60": 0.1,
+  "counts": {
+   "orgasms": 0,
+   "ruins": 0,
+   "edges": 0
+  },
+  "clock": "3:45",
+  "notices": [],
+  "marks": [],
+  "analysing": true
+ },
+ {
+  "atS": 240,
+  "phase": "building",
+  "detail": "5% within 30 s",
+  "percent": 5,
+  "p60": 0.1,
+  "counts": {
+   "orgasms": 0,
+   "ruins": 0,
+   "edges": 0
+  },
+  "clock": "4:00",
+  "notices": [],
+  "marks": [],
+  "analysing": true
+ },
+ {
+  "atS": 255,
+  "phase": "building",
+  "detail": "6% within 30 s",
+  "percent": 6,
+  "p60": 0.124,
+  "counts": {
+   "orgasms": 0,
+   "ruins": 0,
+   "edges": 0
+  },
+  "clock": "4:15",
+  "notices": [],
+  "marks": [],
+  "analysing": true
+ },
+ {
+  "atS": 270,
+  "phase": "building",
+  "detail": "9% within 30 s",
+  "percent": 9,
+  "p60": 0.165,
+  "counts": {
+   "orgasms": 0,
+   "ruins": 0,
+   "edges": 0
+  },
+  "clock": "4:30",
+  "notices": [],
+  "marks": [],
+  "analysing": true
+ },
+ {
+  "atS": 285,
+  "phase": "building",
+  "detail": "9% within 30 s",
+  "percent": 9,
+  "p60": 0.172,
+  "counts": {
+   "orgasms": 0,
+   "ruins": 0,
+   "edges": 0
+  },
+  "clock": "4:45",
+  "notices": [],
+  "marks": [],
+  "analysing": true
+ },
+ {
+  "atS": 300,
+  "phase": "away",
+  "detail": "Step back into view",
+  "percent": null,
+  "p60": null,
+  "counts": {
+   "orgasms": 0,
+   "ruins": 0,
+   "edges": 0
+  },
+  "clock": "5:00",
+  "notices": [],
+  "marks": [],
+  "analysing": true
+ },
+ {
+  "atS": 315,
+  "phase": "away",
+  "detail": "Step back into view",
+  "percent": null,
+  "p60": null,
+  "counts": {
+   "orgasms": 0,
+   "ruins": 0,
+   "edges": 0
+  },
+  "clock": "5:15",
+  "notices": [],
+  "marks": [],
+  "analysing": true
+ },
+ {
+  "atS": 330,
+  "phase": "building",
+  "detail": "9% within 30 s",
+  "percent": 9,
+  "p60": 0.173,
+  "counts": {
+   "orgasms": 0,
+   "ruins": 0,
+   "edges": 0
+  },
+  "clock": "5:30",
+  "notices": [],
+  "marks": [],
+  "analysing": true
+ },
+ {
+  "atS": 345,
+  "phase": "building",
+  "detail": "14% within 30 s",
+  "percent": 14,
+  "p60": 0.253,
+  "counts": {
+   "orgasms": 0,
+   "ruins": 0,
+   "edges": 0
+  },
+  "clock": "5:45",
+  "notices": [],
+  "marks": [],
+  "analysing": true
+ },
+ {
+  "atS": 360,
+  "phase": "building",
+  "detail": "16% within 30 s",
+  "percent": 16,
+  "p60": 0.29,
+  "counts": {
+   "orgasms": 0,
+   "ruins": 0,
+   "edges": 0
+  },
+  "clock": "6:00",
+  "notices": [],
+  "marks": [],
+  "analysing": true
+ },
+ {
+  "atS": 375,
+  "phase": "building",
+  "detail": "18% within 30 s",
+  "percent": 18,
+  "p60": 0.326,
+  "counts": {
+   "orgasms": 0,
+   "ruins": 0,
+   "edges": 0
+  },
+  "clock": "6:15",
+  "notices": [],
+  "marks": [],
+  "analysing": true
+ },
+ {
+  "atS": 390,
+  "phase": "building",
+  "detail": "23% within 30 s",
+  "percent": 23,
+  "p60": 0.406,
+  "counts": {
+   "orgasms": 0,
+   "ruins": 0,
+   "edges": 0
+  },
+  "clock": "6:30",
+  "notices": [],
+  "marks": [],
+  "analysing": true
+ },
+ {
+  "atS": 405,
+  "phase": "building",
+  "detail": "28% within 30 s",
+  "percent": 28,
+  "p60": 0.488,
+  "counts": {
+   "orgasms": 0,
+   "ruins": 0,
+   "edges": 0
+  },
+  "clock": "6:45",
+  "notices": [],
+  "marks": [],
+  "analysing": true
+ },
+ {
+  "atS": 420,
+  "phase": "building",
+  "detail": "29% within 30 s",
+  "percent": 29,
+  "p60": 0.498,
+  "counts": {
+   "orgasms": 0,
+   "ruins": 0,
+   "edges": 0
+  },
+  "clock": "7:00",
+  "notices": [],
+  "marks": [],
+  "analysing": true
+ },
+ {
+  "atS": 435,
+  "phase": "rising",
+  "detail": "33% within 30 s",
+  "percent": 33,
+  "p60": 0.547,
+  "counts": {
+   "orgasms": 0,
+   "ruins": 0,
+   "edges": 0
+  },
+  "clock": "7:15",
+  "notices": [],
+  "marks": [],
+  "analysing": true
+ },
+ {
+  "atS": 450,
+  "phase": "rising",
+  "detail": "35% within 30 s",
+  "percent": 35,
+  "p60": 0.573,
+  "counts": {
+   "orgasms": 0,
+   "ruins": 0,
+   "edges": 0
+  },
+  "clock": "7:30",
+  "notices": [],
+  "marks": [],
+  "analysing": true
+ },
+ {
+  "atS": 465,
+  "phase": "rising",
+  "detail": "40% within 30 s",
+  "percent": 40,
+  "p60": 0.636,
+  "counts": {
+   "orgasms": 0,
+   "ruins": 0,
+   "edges": 0
+  },
+  "clock": "7:45",
+  "notices": [],
+  "marks": [],
+  "analysing": true
+ },
+ {
+  "atS": 480,
+  "phase": "rising",
+  "detail": "57% within 30 s",
+  "percent": 57,
+  "p60": 0.812,
+  "counts": {
+   "orgasms": 0,
+   "ruins": 0,
+   "edges": 0
+  },
+  "clock": "8:00",
+  "notices": [],
+  "marks": [],
+  "analysing": true
+ },
+ {
+  "atS": 495,
+  "phase": "rising",
+  "detail": "59% within 30 s",
+  "percent": 59,
+  "p60": 0.835,
+  "counts": {
+   "orgasms": 0,
+   "ruins": 0,
+   "edges": 0
+  },
+  "clock": "8:15",
+  "notices": [],
+  "marks": [],
+  "analysing": true
+ },
+ {
+  "atS": 510,
+  "phase": "close",
+  "detail": "73% within 30 s",
+  "percent": 73,
+  "p60": 0.926,
+  "counts": {
+   "orgasms": 0,
+   "ruins": 0,
+   "edges": 0
+  },
+  "clock": "8:30",
+  "notices": [],
+  "marks": [],
+  "analysing": true
+ },
+ {
+  "atS": 525,
+  "phase": "onset",
+  "detail": "An orgasm began",
+  "percent": 85,
+  "p60": 0.977,
+  "counts": {
+   "orgasms": 1,
+   "ruins": 0,
+   "edges": 0
+  },
+  "clock": "8:45",
+  "notices": [],
+  "marks": [
+   "onset@97%"
+  ],
+  "analysing": true
+ },
+ {
+  "atS": 540,
+  "phase": "onset",
+  "detail": "An orgasm began",
+  "percent": 55,
+  "p60": 0.794,
+  "counts": {
+   "orgasms": 1,
+   "ruins": 0,
+   "edges": 0
+  },
+  "clock": "9:00",
+  "notices": [],
+  "marks": [
+   "onset@89%"
+  ],
+  "analysing": true
+ },
+ {
+  "atS": 555,
+  "phase": "onset",
+  "detail": "An orgasm began",
+  "percent": 40,
+  "p60": 0.639,
+  "counts": {
+   "orgasms": 1,
+   "ruins": 0,
+   "edges": 0
+  },
+  "clock": "9:15",
+  "notices": [],
+  "marks": [
+   "onset@80%"
+  ],
+  "analysing": true
+ },
+ {
+  "atS": 570,
+  "phase": "afterglow",
+  "detail": "It has ended",
+  "percent": 16,
+  "p60": 0.292,
+  "counts": {
+   "orgasms": 1,
+   "ruins": 0,
+   "edges": 0
+  },
+  "clock": "9:30",
+  "notices": [],
+  "marks": [
+   "onset@72%",
+   "end@92%"
+  ],
+  "analysing": true
+ },
+ {
+  "atS": 585,
+  "phase": "afterglow",
+  "detail": "It has ended",
+  "percent": 11,
+  "p60": 0.208,
+  "counts": {
+   "orgasms": 1,
+   "ruins": 0,
+   "edges": 0
+  },
+  "clock": "9:45",
+  "notices": [],
+  "marks": [
+   "onset@64%",
+   "end@84%"
+  ],
+  "analysing": true
+ },
+ {
+  "atS": 600,
+  "phase": "afterglow",
+  "detail": "It has ended",
+  "percent": 9,
+  "p60": 0.165,
+  "counts": {
+   "orgasms": 1,
+   "ruins": 0,
+   "edges": 0
+  },
+  "clock": "10:00",
+  "notices": [],
+  "marks": [
+   "onset@55%",
+   "end@75%"
+  ],
+  "analysing": true
+ },
+ {
+  "atS": 615,
+  "phase": "afterglow",
+  "detail": "It has ended",
+  "percent": 7,
+  "p60": 0.127,
+  "counts": {
+   "orgasms": 1,
+   "ruins": 0,
+   "edges": 0
+  },
+  "clock": "10:15",
+  "notices": [],
+  "marks": [
+   "onset@47%",
+   "end@67%"
+  ],
+  "analysing": true
+ },
+ {
+  "atS": 630,
+  "phase": "building",
+  "detail": "5% within 30 s",
+  "percent": 5,
+  "p60": 0.098,
+  "counts": {
+   "orgasms": 1,
+   "ruins": 0,
+   "edges": 0
+  },
+  "clock": "10:30",
+  "notices": [],
+  "marks": [
+   "onset@39%",
+   "end@59%"
+  ],
+  "analysing": true
+ },
+ {
+  "atS": 645,
+  "phase": "building",
+  "detail": "4% within 30 s",
+  "percent": 4,
+  "p60": 0.07,
+  "counts": {
+   "orgasms": 1,
+   "ruins": 0,
+   "edges": 0
+  },
+  "clock": "10:45",
+  "notices": [],
+  "marks": [
+   "onset@30%",
+   "end@50%"
+  ],
+  "analysing": true
+ },
+ {
+  "atS": 660,
+  "phase": "building",
+  "detail": "4% within 30 s",
+  "percent": 4,
+  "p60": 0.077,
+  "counts": {
+   "orgasms": 1,
+   "ruins": 0,
+   "edges": 0
+  },
+  "clock": "11:00",
+  "notices": [],
+  "marks": [
+   "onset@22%",
+   "end@42%"
+  ],
+  "analysing": true
+ },
+ {
+  "atS": 675,
+  "phase": "building",
+  "detail": "4% within 30 s",
+  "percent": 4,
+  "p60": 0.075,
+  "counts": {
+   "orgasms": 1,
+   "ruins": 0,
+   "edges": 0
+  },
+  "clock": "11:15",
+  "notices": [],
+  "marks": [
+   "onset@14%",
+   "end@34%"
+  ],
+  "analysing": true
+ },
+ {
+  "atS": 690,
+  "phase": "building",
+  "detail": "3% within 30 s",
+  "percent": 3,
+  "p60": 0.062,
+  "counts": {
+   "orgasms": 1,
+   "ruins": 0,
+   "edges": 0
+  },
+  "clock": "11:30",
+  "notices": [],
+  "marks": [
+   "onset@5%",
+   "end@25%"
+  ],
+  "analysing": true
+ },
+ {
+  "atS": 705,
+  "phase": "ended",
+  "detail": "Analysis is off",
+  "percent": null,
+  "p60": null,
+  "counts": {
+   "orgasms": 1,
+   "ruins": 0,
+   "edges": 0
+  },
+  "clock": "11:40",
+  "notices": [],
+  "marks": [
+   "onset@0%",
+   "end@20%"
+  ],
+  "analysing": false
+ }
+]

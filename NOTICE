@@ -4,4 +4,4 @@ Copyright 2026 Principled Labs, Inc.
 Licensed under the Apache License, Version 2.0 (see LICENSE).
 
 It has no runtime dependencies: everything it does runs on the platform's
-WebCrypto, WebRTC, fetch and EventSource.
+WebCrypto, WebRTC, fetch and its streams, and custom elements.
