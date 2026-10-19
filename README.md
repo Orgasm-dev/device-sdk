@@ -10,7 +10,7 @@ It is the first place your users' video goes, so it is published for you to read
 npm install @orgasm-dev/device
 ```
 
-Each release is built and published from a tag of this repository by its [release workflow](.github/workflows/release.yml), with npm's provenance: `npm audit signatures` checks that the package you installed was built here, at that tag.
+Each release is built from a tag of this repository by its [release workflow](.github/workflows/release.yml), with npm's provenance, and goes live only once a maintainer approves it with two-factor authentication: `npm audit signatures` checks that the package you installed was built here, at that tag.
 
 ## Use
 
