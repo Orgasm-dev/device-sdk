@@ -7,19 +7,25 @@
 //   import { publishLiveSession, newCapability } from '@orgasm-dev/device';
 //   const { capability, capabilityHash } = await newCapability();  // keep `capability` here; send the hash to your server
 //   const session = await yourServer.createLiveSession(capabilityHash);
-//   const stream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: 'user' }, audio: true });
+//   const { stream } = await requestCapture();   // '@orgasm-dev/device/capture'
 //   const live = await publishLiveSession({ session, capability, stream });
-//   live.events((event) => render(event));   // imminence, onset, peak, end...
-//   // later: await live.stop();
+//   live.subscribe({ onEvent: (event) => render(event) });   // imminence, onset, peak, end...
+//   // later: await live.stop({ releaseCamera: true });
 //
 // The device verifies the enclave's attestation against the published policy
 // before it sends a frame, seals every signalling request to the enclave, and
 // holds the WHIP answer to the enclave's signed evidence. Video never reaches
 // orgasm.dev's servers; only the numbers in the events do.
+//
+// This entry point is the part that touches the media and the enclave, kept
+// small to be read. The optional parts are their own entry points:
+// '@orgasm-dev/device/capture' (the camera and microphone prompt) and
+// '@orgasm-dev/device/hud' (the heads-up display and its model).
 
 import { newCapability, newClientNonce, verifyEnclave, type AttestationPolicy, type VerifiedEnclave } from './attestation.ts';
 import { slotCredential } from './seal.ts';
 import { EnclavePublisher, type PublishState } from './publish.ts';
+import { subscribe, type SubscribeOptions, type Subscription } from './subscribe.ts';
 
 export {
   newCapability,
@@ -30,6 +36,10 @@ export {
 export type { AttestationPolicy, VerifiedEnclave } from './attestation.ts';
 export { EnclavePublisher } from './publish.ts';
 export type { PublishState } from './publish.ts';
+export { subscribe, streamOf } from './subscribe.ts';
+export type { StreamSource, SubscribeOptions, Subscription, SubscriptionDetail, SubscriptionState } from './subscribe.ts';
+export { SESSION_EVENT_TYPES, isSessionEvent, isFinalEvent } from './events.ts';
+export type * from './events.ts';
 
 /** The `ingest` object a live session returns (specs/openapi.yaml Ingest). */
 export interface Ingest {
@@ -66,9 +76,15 @@ export interface PublishLiveInput {
 export interface LiveHandle {
   enclave: VerifiedEnclave;
   publisher: EnclavePublisher;
-  /** Subscribe to the session's events over server-sent events; returns an unsubscribe. */
+  /** The session's events, with its client token (see `subscribe`). */
+  subscribe(options: Omit<SubscribeOptions, 'streamUrl' | 'token'>): Subscription;
+  /**
+   * The session's events; returns an unsubscribe. `onError` is called once if
+   * the stream is refused. Kept for 0.1 code: `subscribe` says more.
+   */
   events(onEvent: (event: unknown) => void, onError?: (error: Event) => void): () => void;
-  stop(): Promise<void>;
+  /** Hang up. With `releaseCamera`, also stop the stream's tracks, so the camera light goes off. */
+  stop(options?: { releaseCamera?: boolean }): Promise<void>;
 }
 
 function apiOriginOf(session: LiveSession): string {
@@ -108,27 +124,27 @@ export async function publishLiveSession(input: PublishLiveInput): Promise<LiveH
   });
   await publisher.start();
 
+  const source = { streamUrl: session.results.streamUrl, token: session.results.clientToken };
   return {
     enclave,
     publisher,
-    events(onEvent, onError) {
-      const source = new EventSource(`${session.results.streamUrl}?token=${encodeURIComponent(session.results.clientToken)}`);
-      const handler = (event: MessageEvent) => {
-        try {
-          onEvent(JSON.parse(event.data));
-        } catch {
-          // a malformed frame is skipped
-        }
-      };
-      for (const type of ['imminence.updated', 'orgasm.onset', 'orgasm.peak', 'orgasm.end', 'subject.identified', 'session.status', 'input.warning']) {
-        source.addEventListener(type, handler as EventListener);
-      }
-      source.onmessage = handler;
-      if (onError) source.onerror = onError;
-      return () => source.close();
+    subscribe(options) {
+      return subscribe({ fetchImpl: input.fetchImpl, ...options, ...source });
     },
-    async stop() {
+    events(onEvent, onError) {
+      const subscription = subscribe({
+        ...source,
+        fetchImpl: input.fetchImpl,
+        onEvent,
+        onState: (state) => {
+          if (state === 'refused' && onError) onError(new Event('error'));
+        },
+      });
+      return () => subscription.close();
+    },
+    async stop(options) {
       await publisher.stop();
+      if (options?.releaseCamera) for (const track of stream.getTracks()) track.stop();
     },
   };
 }
