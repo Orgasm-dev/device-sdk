@@ -10,9 +10,15 @@
 //   sub.close();
 //
 // It needs no publish, so it reads a sandbox session as well as a live one.
+// With `frames: ['face']` it also hands `onFaceFrame` the face about five
+// times a second; frames are not events, so they are neither counted nor
+// resumed.
 
 import { SseParser, type SseFrame } from './sse.ts';
-import { isFinalEvent, isSessionEvent, type SessionEvent, type SessionEventType } from './events.ts';
+import { isFaceFrame, isFinalEvent, isSessionEvent, type FaceFrame, type SessionEvent, type SessionEventType } from './events.ts';
+
+/** Messages besides the events a reader can ask for: `face`, the face about five times a second. */
+export type FrameKind = 'face';
 
 /** Where a session's events are read: its `results.streamUrl` and a token for it. */
 export interface StreamSource {
@@ -49,7 +55,11 @@ export interface SubscribeOptions extends StreamSource {
   types?: readonly SessionEventType[];
   /** Start after this event `id` instead of from the first. */
   after?: string;
+  /** Ask for frames too; a view token gets face frames only when it was made with includeFace. */
+  frames?: readonly FrameKind[];
   onEvent: (event: SessionEvent) => void;
+  /** The face between readings, with `frames: ['face']`. */
+  onFaceFrame?: (frame: FaceFrame) => void;
   onState?: (state: SubscriptionState, detail?: SubscriptionDetail) => void;
   /** An event's `sequence` skipped ahead; only reported when no `types` filter is set. */
   onGap?: (gap: { expected: number; received: number }) => void;
@@ -127,7 +137,8 @@ export function subscribe(options: SubscribeOptions): Subscription {
       return; // a malformed frame is skipped
     }
     if (!isSessionEvent(data)) {
-      options.onFrame?.(frame.event, data);
+      if (isFaceFrame(data) && options.onFaceFrame) options.onFaceFrame(data);
+      else options.onFrame?.(frame.event, data);
       return;
     }
     const event = data;
@@ -145,6 +156,7 @@ export function subscribe(options: SubscribeOptions): Subscription {
   const url = (): string => {
     const target = new URL(options.streamUrl);
     if (options.types?.length) target.searchParams.set('types', options.types.join(','));
+    if (options.frames?.length) target.searchParams.set('frames', options.frames.join(','));
     return target.toString();
   };
 

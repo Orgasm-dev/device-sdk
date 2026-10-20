@@ -1,0 +1,1246 @@
+[
+ {
+  "atS": 0,
+  "phase": "calibrating",
+  "detail": "Baseline in 0:59",
+  "percent": null,
+  "p60": null,
+  "counts": {
+   "orgasms": 0,
+   "ruins": 0,
+   "edges": 0
+  },
+  "clock": "0:00",
+  "notices": [],
+  "marks": [],
+  "analysing": true,
+  "strip": null,
+  "face": null,
+  "timeline": null
+ },
+ {
+  "atS": 15,
+  "phase": "calibrating",
+  "detail": "Baseline in 0:44",
+  "percent": null,
+  "p60": null,
+  "counts": {
+   "orgasms": 0,
+   "ruins": 0,
+   "edges": 0
+  },
+  "clock": "0:15",
+  "notices": [],
+  "marks": [],
+  "analysing": true,
+  "strip": null,
+  "face": null,
+  "timeline": null
+ },
+ {
+  "atS": 30,
+  "phase": "calibrating",
+  "detail": "Baseline in 0:29",
+  "percent": null,
+  "p60": null,
+  "counts": {
+   "orgasms": 0,
+   "ruins": 0,
+   "edges": 0
+  },
+  "clock": "0:30",
+  "notices": [],
+  "marks": [],
+  "analysing": true,
+  "strip": null,
+  "face": null,
+  "timeline": null
+ },
+ {
+  "atS": 45,
+  "phase": "calibrating",
+  "detail": "Baseline in 0:14",
+  "percent": null,
+  "p60": null,
+  "counts": {
+   "orgasms": 0,
+   "ruins": 0,
+   "edges": 0
+  },
+  "clock": "0:45",
+  "notices": [],
+  "marks": [],
+  "analysing": true,
+  "strip": null,
+  "face": null,
+  "timeline": null
+ },
+ {
+  "atS": 60,
+  "phase": "calibrating",
+  "detail": "Getting your baseline",
+  "percent": null,
+  "p60": null,
+  "counts": {
+   "orgasms": 0,
+   "ruins": 0,
+   "edges": 0
+  },
+  "clock": "1:00",
+  "notices": [],
+  "marks": [],
+  "analysing": true,
+  "strip": null,
+  "face": null,
+  "timeline": null
+ },
+ {
+  "atS": 75,
+  "phase": "building",
+  "detail": "2% within 30 s",
+  "percent": 2,
+  "p60": 0.039,
+  "counts": {
+   "orgasms": 0,
+   "ruins": 0,
+   "edges": 0
+  },
+  "clock": "1:15",
+  "notices": [],
+  "marks": [],
+  "analysing": true,
+  "strip": "Unit: Waves [A11/60 B8/60]",
+  "face": "reading jaw 15%",
+  "timeline": "60-120 s: imminence, stimulation, body; Waves"
+ },
+ {
+  "atS": 90,
+  "phase": "building",
+  "detail": "3% within 30 s",
+  "percent": 3,
+  "p60": 0.052,
+  "counts": {
+   "orgasms": 0,
+   "ruins": 0,
+   "edges": 0
+  },
+  "clock": "1:30",
+  "notices": [],
+  "marks": [],
+  "analysing": true,
+  "strip": "Unit: Waves [A11/60 B8/60]",
+  "face": "reading jaw 15%",
+  "timeline": "60-120 s: imminence, stimulation, body; Waves"
+ },
+ {
+  "atS": 105,
+  "phase": "building",
+  "detail": "3% within 30 s",
+  "percent": 3,
+  "p60": 0.064,
+  "counts": {
+   "orgasms": 0,
+   "ruins": 0,
+   "edges": 0
+  },
+  "clock": "1:45",
+  "notices": [],
+  "marks": [],
+  "analysing": true,
+  "strip": "Unit: Waves [A11/60 B8/60]",
+  "face": "reading jaw 14%",
+  "timeline": "60-120 s: imminence, stimulation, body; Waves"
+ },
+ {
+  "atS": 120,
+  "phase": "building",
+  "detail": "4% within 30 s",
+  "percent": 4,
+  "p60": 0.082,
+  "counts": {
+   "orgasms": 0,
+   "ruins": 0,
+   "edges": 0
+  },
+  "clock": "2:00",
+  "notices": [],
+  "marks": [],
+  "analysing": true,
+  "strip": "Unit: Waves [A12/60 B9/60]",
+  "face": "reading jaw 14%",
+  "timeline": "60-125 s: imminence, stimulation, body; Waves"
+ },
+ {
+  "atS": 135,
+  "phase": "building",
+  "detail": "6% within 30 s",
+  "percent": 6,
+  "p60": 0.114,
+  "counts": {
+   "orgasms": 0,
+   "ruins": 0,
+   "edges": 0
+  },
+  "clock": "2:15",
+  "notices": [],
+  "marks": [],
+  "analysing": true,
+  "strip": "Unit: Waves [A12/60 B9/60]",
+  "face": "reading jaw 13%",
+  "timeline": "60-140 s: imminence, stimulation, body; Waves"
+ },
+ {
+  "atS": 150,
+  "phase": "building",
+  "detail": "6% within 30 s",
+  "percent": 6,
+  "p60": 0.118,
+  "counts": {
+   "orgasms": 0,
+   "ruins": 0,
+   "edges": 0
+  },
+  "clock": "2:30",
+  "notices": [],
+  "marks": [],
+  "analysing": true,
+  "strip": "Unit: Waves [A12/60 B9/60]",
+  "face": "reading jaw 13%",
+  "timeline": "60-155 s: imminence, stimulation, body; Waves"
+ },
+ {
+  "atS": 165,
+  "phase": "building",
+  "detail": "7% within 30 s",
+  "percent": 7,
+  "p60": 0.132,
+  "counts": {
+   "orgasms": 0,
+   "ruins": 0,
+   "edges": 0
+  },
+  "clock": "2:45",
+  "notices": [],
+  "marks": [],
+  "analysing": true,
+  "strip": "Unit: Waves [A13/60 B10/60]",
+  "face": "reading jaw 13%",
+  "timeline": "60-170 s: imminence, stimulation, body; Waves"
+ },
+ {
+  "atS": 180,
+  "phase": "building",
+  "detail": "8% within 30 s",
+  "percent": 8,
+  "p60": 0.16,
+  "counts": {
+   "orgasms": 0,
+   "ruins": 0,
+   "edges": 0
+  },
+  "clock": "3:00",
+  "notices": [],
+  "marks": [],
+  "analysing": true,
+  "strip": "Unit: Waves [A13/60 B10/60]",
+  "face": "reading jaw 14%",
+  "timeline": "60-185 s: imminence, stimulation, body; Waves"
+ },
+ {
+  "atS": 195,
+  "phase": "building",
+  "detail": "7% within 30 s",
+  "percent": 7,
+  "p60": 0.136,
+  "counts": {
+   "orgasms": 0,
+   "ruins": 0,
+   "edges": 0
+  },
+  "clock": "3:15",
+  "notices": [],
+  "marks": [],
+  "analysing": true,
+  "strip": "Unit: Waves [A13/60 B10/60]",
+  "face": "reading jaw 14%",
+  "timeline": "60-200 s: imminence, stimulation, body; Waves"
+ },
+ {
+  "atS": 210,
+  "phase": "building",
+  "detail": "8% within 30 s",
+  "percent": 8,
+  "p60": 0.159,
+  "counts": {
+   "orgasms": 0,
+   "ruins": 0,
+   "edges": 0
+  },
+  "clock": "3:30",
+  "notices": [],
+  "marks": [],
+  "analysing": true,
+  "strip": "Unit: Waves [A13/60 B10/60]",
+  "face": "reading jaw 15%",
+  "timeline": "60-215 s: imminence, stimulation, body; Waves"
+ },
+ {
+  "atS": 225,
+  "phase": "building",
+  "detail": "9% within 30 s",
+  "percent": 9,
+  "p60": 0.174,
+  "counts": {
+   "orgasms": 0,
+   "ruins": 0,
+   "edges": 0
+  },
+  "clock": "3:45",
+  "notices": [],
+  "marks": [],
+  "analysing": true,
+  "strip": "Unit: Waves [A14/60 B11/60]",
+  "face": "reading jaw 18%",
+  "timeline": "60-230 s: imminence, stimulation, body; Waves"
+ },
+ {
+  "atS": 240,
+  "phase": "building",
+  "detail": "12% within 30 s",
+  "percent": 12,
+  "p60": 0.229,
+  "counts": {
+   "orgasms": 0,
+   "ruins": 0,
+   "edges": 0
+  },
+  "clock": "4:00",
+  "notices": [],
+  "marks": [],
+  "analysing": true,
+  "strip": "Unit: Waves [A15/60 B11/60]",
+  "face": "reading jaw 21%",
+  "timeline": "60-245 s: imminence, stimulation, body; Waves"
+ },
+ {
+  "atS": 255,
+  "phase": "building",
+  "detail": "18% within 30 s",
+  "percent": 18,
+  "p60": 0.329,
+  "counts": {
+   "orgasms": 0,
+   "ruins": 0,
+   "edges": 0
+  },
+  "clock": "4:15",
+  "notices": [],
+  "marks": [],
+  "analysing": true,
+  "strip": "Unit: Waves [A16/60 B12/60]",
+  "face": "reading jaw 24%",
+  "timeline": "60-260 s: imminence, stimulation, body; Waves"
+ },
+ {
+  "atS": 270,
+  "phase": "building",
+  "detail": "19% within 30 s",
+  "percent": 19,
+  "p60": 0.339,
+  "counts": {
+   "orgasms": 0,
+   "ruins": 0,
+   "edges": 0
+  },
+  "clock": "4:30",
+  "notices": [],
+  "marks": [],
+  "analysing": true,
+  "strip": "Unit: Waves [A18/60 B14/60]",
+  "face": "reading jaw 28%",
+  "timeline": "60-275 s: imminence, stimulation, body; Waves"
+ },
+ {
+  "atS": 285,
+  "phase": "building",
+  "detail": "23% within 30 s",
+  "percent": 23,
+  "p60": 0.409,
+  "counts": {
+   "orgasms": 0,
+   "ruins": 0,
+   "edges": 0
+  },
+  "clock": "4:45",
+  "notices": [],
+  "marks": [],
+  "analysing": true,
+  "strip": "Unit: Waves [A19/60 B14/60]",
+  "face": "reading jaw 31%",
+  "timeline": "60-290 s: imminence, stimulation, body; Waves"
+ },
+ {
+  "atS": 300,
+  "phase": "building",
+  "detail": "28% within 30 s",
+  "percent": 28,
+  "p60": 0.485,
+  "counts": {
+   "orgasms": 0,
+   "ruins": 0,
+   "edges": 0
+  },
+  "clock": "5:00",
+  "notices": [],
+  "marks": [],
+  "analysing": true,
+  "strip": "Unit: Waves [A20/60 B15/60]",
+  "face": "reading jaw 34%",
+  "timeline": "60-305 s: imminence, stimulation, body; Waves"
+ },
+ {
+  "atS": 315,
+  "phase": "rising",
+  "detail": "31% within 30 s",
+  "percent": 31,
+  "p60": 0.529,
+  "counts": {
+   "orgasms": 0,
+   "ruins": 0,
+   "edges": 0
+  },
+  "clock": "5:15",
+  "notices": [],
+  "marks": [],
+  "analysing": true,
+  "strip": "Unit: Waves [A21/60 B16/60]",
+  "face": "reading jaw 35%",
+  "timeline": "60-320 s: imminence, stimulation, body; Waves"
+ },
+ {
+  "atS": 330,
+  "phase": "building",
+  "detail": "29% within 30 s",
+  "percent": 29,
+  "p60": 0.5,
+  "counts": {
+   "orgasms": 0,
+   "ruins": 0,
+   "edges": 0
+  },
+  "clock": "5:30",
+  "notices": [],
+  "marks": [],
+  "analysing": true,
+  "strip": "Unit: Waves [A21/60 B16/60]",
+  "face": "reading jaw 35%",
+  "timeline": "60-335 s: imminence, stimulation, body; Waves"
+ },
+ {
+  "atS": 345,
+  "phase": "rising",
+  "detail": "39% within 30 s",
+  "percent": 39,
+  "p60": 0.627,
+  "counts": {
+   "orgasms": 0,
+   "ruins": 0,
+   "edges": 0
+  },
+  "clock": "5:45",
+  "notices": [],
+  "marks": [],
+  "analysing": true,
+  "strip": "Unit: Waves [A24/60 B18/60]",
+  "face": "reading jaw 42%",
+  "timeline": "60-350 s: imminence, stimulation, body; Waves"
+ },
+ {
+  "atS": 360,
+  "phase": "rising",
+  "detail": "56% within 30 s",
+  "percent": 56,
+  "p60": 0.804,
+  "counts": {
+   "orgasms": 0,
+   "ruins": 0,
+   "edges": 0
+  },
+  "clock": "6:00",
+  "notices": [],
+  "marks": [],
+  "analysing": true,
+  "strip": "Unit: Pulse [A31/60 B23/60]",
+  "face": "reading jaw 52%",
+  "timeline": "60-365 s: imminence, stimulation, body; Waves Pulse"
+ },
+ {
+  "atS": 375,
+  "phase": "close",
+  "detail": "64% within 30 s",
+  "percent": 64,
+  "p60": 0.87,
+  "counts": {
+   "orgasms": 0,
+   "ruins": 0,
+   "edges": 0
+  },
+  "clock": "6:15",
+  "notices": [],
+  "marks": [],
+  "analysing": true,
+  "strip": "Unit: Holding [A20/60 B15/60]",
+  "face": "reading jaw 56%",
+  "timeline": "60-380 s: imminence, stimulation, body; Waves Pulse"
+ },
+ {
+  "atS": 390,
+  "phase": "rising",
+  "detail": "52% within 30 s",
+  "percent": 52,
+  "p60": 0.765,
+  "counts": {
+   "orgasms": 0,
+   "ruins": 0,
+   "edges": 0
+  },
+  "clock": "6:30",
+  "notices": [],
+  "marks": [],
+  "analysing": true,
+  "strip": "Unit: Pulse [A29/60 B22/60]",
+  "face": "reading jaw 46%",
+  "timeline": "60-395 s: imminence, stimulation, body; Waves Pulse"
+ },
+ {
+  "atS": 405,
+  "phase": "rising",
+  "detail": "37% within 30 s",
+  "percent": 37,
+  "p60": 0.6,
+  "counts": {
+   "orgasms": 0,
+   "ruins": 0,
+   "edges": 0
+  },
+  "clock": "6:45",
+  "notices": [],
+  "marks": [],
+  "analysing": true,
+  "strip": "Unit: Waves [A23/60 B17/60]",
+  "face": "reading jaw 33%",
+  "timeline": "60-410 s: imminence, stimulation, body; Waves Pulse Waves"
+ },
+ {
+  "atS": 420,
+  "phase": "building",
+  "detail": "22% within 30 s",
+  "percent": 22,
+  "p60": 0.392,
+  "counts": {
+   "orgasms": 0,
+   "ruins": 0,
+   "edges": 1
+  },
+  "clock": "7:00",
+  "notices": [],
+  "marks": [
+   "edge@95%"
+  ],
+  "analysing": true,
+  "strip": "Unit: Waves [A18/60 B14/60]",
+  "face": "reading jaw 23%",
+  "timeline": "60-425 s: imminence, stimulation, body; Waves Pulse Waves"
+ },
+ {
+  "atS": 435,
+  "phase": "building",
+  "detail": "16% within 30 s",
+  "percent": 16,
+  "p60": 0.289,
+  "counts": {
+   "orgasms": 0,
+   "ruins": 0,
+   "edges": 1
+  },
+  "clock": "7:15",
+  "notices": [],
+  "marks": [
+   "edge@86%"
+  ],
+  "analysing": true,
+  "strip": "Unit: Waves [A16/60 B12/60]",
+  "face": "reading jaw 19%",
+  "timeline": "60-440 s: imminence, stimulation, body; Waves Pulse Waves"
+ },
+ {
+  "atS": 450,
+  "phase": "building",
+  "detail": "13% within 30 s",
+  "percent": 13,
+  "p60": 0.247,
+  "counts": {
+   "orgasms": 0,
+   "ruins": 0,
+   "edges": 1
+  },
+  "clock": "7:30",
+  "notices": [],
+  "marks": [
+   "edge@78%"
+  ],
+  "analysing": true,
+  "strip": "Unit: Waves [A15/60 B11/60]",
+  "face": "reading jaw 19%",
+  "timeline": "60-455 s: imminence, stimulation, body; Waves Pulse Waves"
+ },
+ {
+  "atS": 465,
+  "phase": "building",
+  "detail": "14% within 30 s",
+  "percent": 14,
+  "p60": 0.253,
+  "counts": {
+   "orgasms": 0,
+   "ruins": 0,
+   "edges": 1
+  },
+  "clock": "7:45",
+  "notices": [],
+  "marks": [
+   "edge@70%"
+  ],
+  "analysing": true,
+  "strip": "Unit: Waves [A15/60 B11/60]",
+  "face": "reading jaw 18%",
+  "timeline": "60-470 s: imminence, stimulation, body; Waves Pulse Waves"
+ },
+ {
+  "atS": 480,
+  "phase": "building",
+  "detail": "15% within 30 s",
+  "percent": 15,
+  "p60": 0.27,
+  "counts": {
+   "orgasms": 0,
+   "ruins": 0,
+   "edges": 1
+  },
+  "clock": "8:00",
+  "notices": [],
+  "marks": [
+   "edge@61%"
+  ],
+  "analysing": true,
+  "strip": "Unit: Waves [A15/60 B11/60]",
+  "face": "reading jaw 21%",
+  "timeline": "60-485 s: imminence, stimulation, body; Waves Pulse Waves"
+ },
+ {
+  "atS": 495,
+  "phase": "building",
+  "detail": "24% within 30 s",
+  "percent": 24,
+  "p60": 0.427,
+  "counts": {
+   "orgasms": 0,
+   "ruins": 0,
+   "edges": 1
+  },
+  "clock": "8:15",
+  "notices": [],
+  "marks": [
+   "edge@53%"
+  ],
+  "analysing": true,
+  "strip": "Unit: Waves [A19/60 B14/60]",
+  "face": "reading jaw 28%",
+  "timeline": "60-500 s: imminence, stimulation, body; Waves Pulse Waves"
+ },
+ {
+  "atS": 510,
+  "phase": "rising",
+  "detail": "34% within 30 s",
+  "percent": 34,
+  "p60": 0.562,
+  "counts": {
+   "orgasms": 0,
+   "ruins": 0,
+   "edges": 1
+  },
+  "clock": "8:30",
+  "notices": [],
+  "marks": [
+   "edge@45%"
+  ],
+  "analysing": true,
+  "strip": "Unit: Waves [A22/60 B17/60]",
+  "face": "reading jaw 36%",
+  "timeline": "60-515 s: imminence, stimulation, body; Waves Pulse Waves"
+ },
+ {
+  "atS": 525,
+  "phase": "rising",
+  "detail": "38% within 30 s",
+  "percent": 38,
+  "p60": 0.61,
+  "counts": {
+   "orgasms": 0,
+   "ruins": 0,
+   "edges": 1
+  },
+  "clock": "8:45",
+  "notices": [],
+  "marks": [
+   "edge@36%"
+  ],
+  "analysing": true,
+  "strip": "Unit: Waves [A23/60 B17/60]",
+  "face": "reading jaw 39%",
+  "timeline": "60-530 s: imminence, stimulation, body; Waves Pulse Waves"
+ },
+ {
+  "atS": 540,
+  "phase": "rising",
+  "detail": "50% within 30 s",
+  "percent": 50,
+  "p60": 0.75,
+  "counts": {
+   "orgasms": 0,
+   "ruins": 0,
+   "edges": 1
+  },
+  "clock": "9:00",
+  "notices": [],
+  "marks": [
+   "edge@28%"
+  ],
+  "analysing": true,
+  "strip": "Unit: Pulse [A29/60 B22/60]",
+  "face": "reading jaw 51%",
+  "timeline": "60-545 s: imminence, stimulation, body; Waves Pulse Waves Pulse"
+ },
+ {
+  "atS": 555,
+  "phase": "close",
+  "detail": "64% within 30 s",
+  "percent": 64,
+  "p60": 0.872,
+  "counts": {
+   "orgasms": 0,
+   "ruins": 0,
+   "edges": 1
+  },
+  "clock": "9:15",
+  "notices": [],
+  "marks": [
+   "edge@20%"
+  ],
+  "analysing": true,
+  "strip": "Unit: Holding [A20/60 B15/60]",
+  "face": "reading jaw 59%",
+  "timeline": "60-560 s: imminence, stimulation, body; Waves Pulse Waves Pulse"
+ },
+ {
+  "atS": 570,
+  "phase": "close",
+  "detail": "62% within 30 s",
+  "percent": 62,
+  "p60": 0.857,
+  "counts": {
+   "orgasms": 0,
+   "ruins": 0,
+   "edges": 1
+  },
+  "clock": "9:30",
+  "notices": [],
+  "marks": [
+   "edge@11%"
+  ],
+  "analysing": true,
+  "strip": "Unit: Holding [A20/60 B15/60]",
+  "face": "reading jaw 59%",
+  "timeline": "60-575 s: imminence, stimulation, body; Waves Pulse Waves Pulse"
+ },
+ {
+  "atS": 585,
+  "phase": "rising",
+  "detail": "35% within 30 s",
+  "percent": 35,
+  "p60": 0.575,
+  "counts": {
+   "orgasms": 0,
+   "ruins": 0,
+   "edges": 1
+  },
+  "clock": "9:45",
+  "notices": [],
+  "marks": [
+   "edge@3%"
+  ],
+  "analysing": true,
+  "strip": "Unit: Waves [A25/60 B19/60]",
+  "face": "reading jaw 38%",
+  "timeline": "60-590 s: imminence, stimulation, body; Waves Pulse Waves Pulse Waves"
+ },
+ {
+  "atS": 600,
+  "phase": "building",
+  "detail": "25% within 30 s",
+  "percent": 25,
+  "p60": 0.438,
+  "counts": {
+   "orgasms": 0,
+   "ruins": 0,
+   "edges": 2
+  },
+  "clock": "10:00",
+  "notices": [],
+  "marks": [
+   "edge@95%"
+  ],
+  "analysing": true,
+  "strip": "Unit: Waves [A20/60 B15/60]",
+  "face": "reading jaw 32%",
+  "timeline": "60-605 s: imminence, stimulation, body; Waves Pulse Waves Pulse Waves"
+ },
+ {
+  "atS": 615,
+  "phase": "building",
+  "detail": "16% within 30 s",
+  "percent": 16,
+  "p60": 0.294,
+  "counts": {
+   "orgasms": 0,
+   "ruins": 0,
+   "edges": 2
+  },
+  "clock": "10:15",
+  "notices": [],
+  "marks": [
+   "edge@86%"
+  ],
+  "analysing": true,
+  "strip": "Unit: Waves [A16/60 B12/60]",
+  "face": "reading jaw 23%",
+  "timeline": "60-620 s: imminence, stimulation, body; Waves Pulse Waves Pulse Waves"
+ },
+ {
+  "atS": 630,
+  "phase": "building",
+  "detail": "14% within 30 s",
+  "percent": 14,
+  "p60": 0.256,
+  "counts": {
+   "orgasms": 0,
+   "ruins": 0,
+   "edges": 2
+  },
+  "clock": "10:30",
+  "notices": [],
+  "marks": [
+   "edge@78%"
+  ],
+  "analysing": true,
+  "strip": "Unit: Waves [A15/60 B11/60]",
+  "face": "reading jaw 21%",
+  "timeline": "60-635 s: imminence, stimulation, body; Waves Pulse Waves Pulse Waves"
+ },
+ {
+  "atS": 645,
+  "phase": "building",
+  "detail": "14% within 30 s",
+  "percent": 14,
+  "p60": 0.261,
+  "counts": {
+   "orgasms": 0,
+   "ruins": 0,
+   "edges": 2
+  },
+  "clock": "10:45",
+  "notices": [],
+  "marks": [
+   "edge@70%"
+  ],
+  "analysing": true,
+  "strip": "Unit: Waves [A15/60 B11/60]",
+  "face": "reading jaw 20%",
+  "timeline": "60-650 s: imminence, stimulation, body; Waves Pulse Waves Pulse Waves"
+ },
+ {
+  "atS": 660,
+  "phase": "building",
+  "detail": "13% within 30 s",
+  "percent": 13,
+  "p60": 0.249,
+  "counts": {
+   "orgasms": 0,
+   "ruins": 0,
+   "edges": 2
+  },
+  "clock": "11:00",
+  "notices": [],
+  "marks": [
+   "edge@61%"
+  ],
+  "analysing": true,
+  "strip": "Unit: Waves [A15/60 B11/60]",
+  "face": "reading jaw 18%",
+  "timeline": "60-665 s: imminence, stimulation, body; Waves Pulse Waves Pulse Waves"
+ },
+ {
+  "atS": 675,
+  "phase": "building",
+  "detail": "16% within 30 s",
+  "percent": 16,
+  "p60": 0.298,
+  "counts": {
+   "orgasms": 0,
+   "ruins": 0,
+   "edges": 2
+  },
+  "clock": "11:15",
+  "notices": [],
+  "marks": [
+   "edge@53%"
+  ],
+  "analysing": true,
+  "strip": "Unit: Waves [A16/60 B12/60]",
+  "face": "reading jaw 21%",
+  "timeline": "60-680 s: imminence, stimulation, body; Waves Pulse Waves Pulse Waves"
+ },
+ {
+  "atS": 690,
+  "phase": "building",
+  "detail": "26% within 30 s",
+  "percent": 26,
+  "p60": 0.449,
+  "counts": {
+   "orgasms": 0,
+   "ruins": 0,
+   "edges": 2
+  },
+  "clock": "11:30",
+  "notices": [],
+  "marks": [
+   "edge@45%"
+  ],
+  "analysing": true,
+  "strip": "Unit: Waves [A20/60 B15/60]",
+  "face": "reading jaw 27%",
+  "timeline": "60-695 s: imminence, stimulation, body; Waves Pulse Waves Pulse Waves"
+ },
+ {
+  "atS": 705,
+  "phase": "rising",
+  "detail": "38% within 30 s",
+  "percent": 38,
+  "p60": 0.612,
+  "counts": {
+   "orgasms": 0,
+   "ruins": 0,
+   "edges": 2
+  },
+  "clock": "11:45",
+  "notices": [],
+  "marks": [
+   "edge@36%"
+  ],
+  "analysing": true,
+  "strip": "Unit: Waves [A23/60 B17/60]",
+  "face": "reading jaw 34%",
+  "timeline": "60-710 s: imminence, stimulation, body; Waves Pulse Waves Pulse Waves"
+ },
+ {
+  "atS": 720,
+  "phase": "rising",
+  "detail": "37% within 30 s",
+  "percent": 37,
+  "p60": 0.599,
+  "counts": {
+   "orgasms": 0,
+   "ruins": 0,
+   "edges": 2
+  },
+  "clock": "12:00",
+  "notices": [],
+  "marks": [
+   "edge@28%"
+  ],
+  "analysing": true,
+  "strip": "Unit: Waves [A25/60 B19/60]",
+  "face": "reading jaw 38%",
+  "timeline": "60-725 s: imminence, stimulation, body; Waves Pulse Waves Pulse Waves"
+ },
+ {
+  "atS": 735,
+  "phase": "rising",
+  "detail": "49% within 30 s",
+  "percent": 49,
+  "p60": 0.739,
+  "counts": {
+   "orgasms": 0,
+   "ruins": 0,
+   "edges": 2
+  },
+  "clock": "12:15",
+  "notices": [],
+  "marks": [
+   "edge@20%"
+  ],
+  "analysing": true,
+  "strip": "Unit: Pulse [A28/60 B21/60]",
+  "face": "reading jaw 45%",
+  "timeline": "60-740 s: imminence, stimulation, body; Waves Pulse Waves Pulse Waves Pulse"
+ },
+ {
+  "atS": 750,
+  "phase": "close",
+  "detail": "66% within 30 s",
+  "percent": 66,
+  "p60": 0.883,
+  "counts": {
+   "orgasms": 0,
+   "ruins": 0,
+   "edges": 2
+  },
+  "clock": "12:30",
+  "notices": [],
+  "marks": [
+   "edge@11%"
+  ],
+  "analysing": true,
+  "strip": "Unit: Holding [A20/60 B15/60]",
+  "face": "reading jaw 55%",
+  "timeline": "60-755 s: imminence, stimulation, body; Waves Pulse Waves Pulse Waves Pulse"
+ },
+ {
+  "atS": 765,
+  "phase": "close",
+  "detail": "64% within 30 s",
+  "percent": 64,
+  "p60": 0.873,
+  "counts": {
+   "orgasms": 0,
+   "ruins": 0,
+   "edges": 2
+  },
+  "clock": "12:45",
+  "notices": [],
+  "marks": [
+   "edge@3%"
+  ],
+  "analysing": true,
+  "strip": "Unit: Holding [A21/60 B16/60]",
+  "face": "reading jaw 59%",
+  "timeline": "60-770 s: imminence, stimulation, body; Waves Pulse Waves Pulse Waves Pulse"
+ },
+ {
+  "atS": 780,
+  "phase": "rising",
+  "detail": "41% within 30 s",
+  "percent": 41,
+  "p60": 0.652,
+  "counts": {
+   "orgasms": 0,
+   "ruins": 0,
+   "edges": 2
+  },
+  "clock": "13:00",
+  "notices": [],
+  "marks": [],
+  "analysing": true,
+  "strip": "Unit: Pulse [A28/60 B21/60]",
+  "face": "reading jaw 43%",
+  "timeline": "60-785 s: imminence, stimulation, body; Waves Pulse Waves Pulse Waves Pulse"
+ },
+ {
+  "atS": 795,
+  "phase": "edge",
+  "detail": "An edge, held back",
+  "percent": 31,
+  "p60": 0.53,
+  "counts": {
+   "orgasms": 0,
+   "ruins": 0,
+   "edges": 3
+  },
+  "clock": "13:15",
+  "notices": [],
+  "marks": [
+   "edge@98%"
+  ],
+  "analysing": true,
+  "strip": "Unit: Waves [A21/60 B16/60]",
+  "face": "reading jaw 35%",
+  "timeline": "60-800 s: imminence, stimulation, body; Waves Pulse Waves Pulse Waves Pulse Waves"
+ },
+ {
+  "atS": 810,
+  "phase": "building",
+  "detail": "21% within 30 s",
+  "percent": 21,
+  "p60": 0.368,
+  "counts": {
+   "orgasms": 0,
+   "ruins": 0,
+   "edges": 3
+  },
+  "clock": "13:30",
+  "notices": [],
+  "marks": [
+   "edge@89%"
+  ],
+  "analysing": true,
+  "strip": "Unit: Waves [A18/60 B14/60]",
+  "face": "reading jaw 29%",
+  "timeline": "60-815 s: imminence, stimulation, body; Waves Pulse Waves Pulse Waves Pulse Waves"
+ },
+ {
+  "atS": 825,
+  "phase": "building",
+  "detail": "12% within 30 s",
+  "percent": 12,
+  "p60": 0.229,
+  "counts": {
+   "orgasms": 0,
+   "ruins": 0,
+   "edges": 3
+  },
+  "clock": "13:45",
+  "notices": [],
+  "marks": [
+   "edge@81%"
+  ],
+  "analysing": true,
+  "strip": "Unit: Waves [A15/60 B11/60]",
+  "face": "reading jaw 24%",
+  "timeline": "60-830 s: imminence, stimulation, body; Waves Pulse Waves Pulse Waves Pulse Waves"
+ },
+ {
+  "atS": 840,
+  "phase": "building",
+  "detail": "11% within 30 s",
+  "percent": 11,
+  "p60": 0.208,
+  "counts": {
+   "orgasms": 0,
+   "ruins": 0,
+   "edges": 3
+  },
+  "clock": "14:00",
+  "notices": [],
+  "marks": [
+   "edge@73%"
+  ],
+  "analysing": true,
+  "strip": "Unit: Waves [A15/60 B11/60]",
+  "face": "reading jaw 22%",
+  "timeline": "60-845 s: imminence, stimulation, body; Waves Pulse Waves Pulse Waves Pulse Waves"
+ },
+ {
+  "atS": 855,
+  "phase": "building",
+  "detail": "10% within 30 s",
+  "percent": 10,
+  "p60": 0.187,
+  "counts": {
+   "orgasms": 0,
+   "ruins": 0,
+   "edges": 3
+  },
+  "clock": "14:15",
+  "notices": [],
+  "marks": [
+   "edge@64%"
+  ],
+  "analysing": true,
+  "strip": "Unit: Waves [A14/60 B11/60]",
+  "face": "reading jaw 21%",
+  "timeline": "60-860 s: imminence, stimulation, body; Waves Pulse Waves Pulse Waves Pulse Waves"
+ },
+ {
+  "atS": 870,
+  "phase": "building",
+  "detail": "10% within 30 s",
+  "percent": 10,
+  "p60": 0.181,
+  "counts": {
+   "orgasms": 0,
+   "ruins": 0,
+   "edges": 3
+  },
+  "clock": "14:30",
+  "notices": [],
+  "marks": [
+   "edge@56%"
+  ],
+  "analysing": true,
+  "strip": "Unit: Waves [A14/60 B11/60]",
+  "face": "reading jaw 19%",
+  "timeline": "60-875 s: imminence, stimulation, body; Waves Pulse Waves Pulse Waves Pulse Waves"
+ },
+ {
+  "atS": 885,
+  "phase": "building",
+  "detail": "9% within 30 s",
+  "percent": 9,
+  "p60": 0.177,
+  "counts": {
+   "orgasms": 0,
+   "ruins": 0,
+   "edges": 3
+  },
+  "clock": "14:45",
+  "notices": [],
+  "marks": [
+   "edge@48%"
+  ],
+  "analysing": true,
+  "strip": "Unit: Waves [A13/60 B10/60]",
+  "face": "reading jaw 17%",
+  "timeline": "60-890 s: imminence, stimulation, body; Waves Pulse Waves Pulse Waves Pulse Waves"
+ },
+ {
+  "atS": 900,
+  "phase": "ended",
+  "detail": "Analysis is off",
+  "percent": null,
+  "p60": null,
+  "counts": {
+   "orgasms": 0,
+   "ruins": 0,
+   "edges": 3
+  },
+  "clock": "15:00",
+  "notices": [],
+  "marks": [
+   "edge@39%"
+  ],
+  "analysing": false,
+  "strip": "Unit: Waves [A13/60 B10/60]",
+  "face": "reading jaw 12%",
+  "timeline": "60-900 s: imminence, stimulation, body; Waves Pulse Waves Pulse Waves Pulse Waves"
+ },
+ {
+  "atS": 915,
+  "phase": "ended",
+  "detail": "Analysis is off",
+  "percent": null,
+  "p60": null,
+  "counts": {
+   "orgasms": 0,
+   "ruins": 0,
+   "edges": 3
+  },
+  "clock": "15:00",
+  "notices": [],
+  "marks": [
+   "edge@39%"
+  ],
+  "analysing": false,
+  "strip": "Unit: Waves [A13/60 B10/60]",
+  "face": "No reading for a few seconds",
+  "timeline": "60-900 s: imminence, stimulation, body; Waves Pulse Waves Pulse Waves Pulse Waves"
+ }
+]

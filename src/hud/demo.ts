@@ -1,11 +1,14 @@
 // Scripted sessions that play into a HUD with no network and no camera: for
 // a docs page, a design review, or placing an overlay in OBS before a show.
 // They are made-up readings shaped like the sandbox's scenarios, not a
-// recording of anyone.
+// recording of anyone: imminence, the voice, a face (its channels once a
+// second, and five frames a second to a HUD that draws it), and a scripted
+// two-channel device whose level follows the curve, as a product reporting
+// its device would.
 //
-//   const stop = playDemo((event) => hud.feed(event), { scenario: 'edge', speed: 4 });
+//   const stop = playDemo((event) => hud.feed(event), { scenario: 'edge', speed: 4, onFaceFrame: (f) => hud.feedFrame(f) });
 
-import type { SessionEvent, SessionEventOf, SessionEventType } from '../events.ts';
+import { FACE_EXPRESSION_CHANNELS, type FaceChannels, type FaceExpressionChannel, type FaceFrame, type FaceRegions, type SessionEvent, type SessionEventOf, type SessionEventType, type StimulationData } from '../events.ts';
 
 export type DemoScenario = 'edge' | 'finish' | 'ruin' | 'face-lost';
 
@@ -69,10 +72,93 @@ const wobble = (t: number) => 0.018 * Math.sin(t * 0.9) + 0.011 * Math.sin(t * 2
 
 const round = (v: number, digits = 3) => Math.round(v * 10 ** digits) / 10 ** digits;
 
+const BASELINE_S = 62;
+const sessionIdOf = (scenario: DemoScenario, loop: number) => `ls_demo${LETTER[scenario]}${String(loop).padStart(15, '0')}`;
+const awayAt = (script: Script, t: number) => script.away?.some(([a, b]) => t >= a && t < b) ?? false;
+
+/** Each channel at rest and at its fullest, eased between by imminence (made-up, like the rest of the demo). */
+const EXPRESSION: Record<FaceExpressionChannel, [number, number]> = {
+  eyeBlinkL: [0.04, 0.32], eyeBlinkR: [0.04, 0.3], eyeWideL: [0.05, 0.5], eyeWideR: [0.05, 0.47], browDownL: [0.05, 0.34], browDownR: [0.05, 0.31],
+  browInnerUp: [0.12, 0.62], browOuterUpL: [0.06, 0.41], browOuterUpR: [0.06, 0.38], jawOpen: [0.1, 0.8], lipsPart: [0.14, 0.7], mouthSmileL: [0.05, 0.3],
+  mouthSmileR: [0.06, 0.35], mouthStretch: [0.05, 0.55], mouthPucker: [0.03, 0.2], noseSneer: [0.03, 0.3], noseFlare: [0.05, 0.42], cheekSquintL: [0.07, 0.55],
+  cheekSquintR: [0.08, 0.52], chinRaise: [0.04, 0.26], lidTighten: [0.06, 0.5], browTogether: [0.04, 0.4], noseWrinkle: [0.03, 0.35], lidRaise: [0.04, 0.3],
+};
+
+/** The demo's face at a stream moment: null before the baseline and while away; a function of time, so readings and frames agree. */
+export function demoFace(scenario: DemoScenario, t: number): FaceChannels | null {
+  const script = SCRIPTS[scenario];
+  if (t < BASELINE_S || awayAt(script, t)) return null;
+  const drive = eased(script.knots, t);
+  const phase = (((t + 1.3) % 3.7) + 3.7) % 3.7;
+  const blink = phase < 0.18 ? Math.sin((phase / 0.18) * Math.PI) : 0;
+  const expression = Object.fromEntries(
+    FACE_EXPRESSION_CHANNELS.map((name, k) => {
+      const [rest, full] = EXPRESSION[name];
+      const value = Math.min(1, Math.max(0, rest + (full - rest) * drive + 0.03 * Math.sin(t * (0.9 + 0.13 * k) + k * 1.7) + 0.02 * Math.sin(t * (2.3 + 0.07 * k) + k)));
+      return [name, round(name.startsWith('eyeBlink') ? Math.max(value, blink) : value, 2)];
+    }),
+  ) as FaceChannels['expression'];
+  return {
+    expression,
+    head: {
+      yawDeg: round(6 * Math.sin(t / 1.7 + 0.4) + 3 * drive * Math.sin(t * 1.9 + 1.2), 1),
+      pitchDeg: round(2.5 * Math.sin(t / 2.1 + 2) + 8 * drive - 2, 1),
+      rollDeg: round(3.5 * Math.sin(t / 1.4 + 0.9) + 2 * drive * Math.sin(t * 2.7 + 0.3), 1),
+    },
+  };
+}
+
+const REGIONS: Record<keyof FaceRegions, FaceExpressionChannel[]> = {
+  brows: ['browDownL', 'browDownR', 'browTogether', 'browInnerUp', 'browOuterUpL', 'browOuterUpR'],
+  eyes: ['eyeBlinkL', 'eyeBlinkR', 'eyeWideL', 'eyeWideR'],
+  cheeks: ['cheekSquintL', 'cheekSquintR', 'lidTighten'],
+  nose: ['noseWrinkle', 'noseSneer', 'noseFlare'],
+  lips: ['lipsPart', 'mouthStretch', 'mouthPucker'],
+  corners: ['mouthSmileL', 'mouthSmileR'],
+  jaw: ['jawOpen', 'chinRaise'],
+};
+const regionsOf = (face: FaceChannels): FaceRegions =>
+  Object.fromEntries(Object.entries(REGIONS).map(([key, names]) => [key, Math.max(...names.map((n) => face.expression[n]))])) as unknown as FaceRegions;
+
+const LEVEL_MAX = 60;
+
+/**
+ * The scripted device's state at a stream second: its level follows the
+ * curve, its mode changes as imminence rises, it is held near the edge
+ * (the edging scenario), stopped at the ruin, paused while the face is away,
+ * and at rest for a while after an orgasm.
+ */
+function deviceAt(scenario: DemoScenario, script: Script, t: number): Omit<StimulationData, 'changedAtS'> {
+  const p = eased(script.knots, t);
+  const resting = script.orgasms.some((o) => !o.ruined && t >= o.endS && t < o.endS + 20);
+  const stopped = script.orgasms.some((o) => o.ruined && t >= o.onsetS - 3 && t < o.endS + 25);
+  const away = awayAt(script, t);
+  const held = scenario === 'edge' && p >= 0.6;
+  const on = !resting && !stopped;
+  const a = Math.round(10 + 38 * p);
+  const level = held ? Math.round(a * 0.6) : a;
+  const b = Math.round(level * 0.75);
+  const mode = p >= 0.45 ? 'pulse' : 'waves';
+  return {
+    state: on ? 'on' : 'off',
+    intensity: null,
+    level,
+    levelMax: LEVEL_MAX,
+    channels: [
+      { id: 'a', level, levelMax: LEVEL_MAX },
+      { id: 'b', level: b, levelMax: LEVEL_MAX },
+    ],
+    mode,
+    modeLabel: mode === 'pulse' ? 'Pulse' : 'Waves',
+    device: { label: 'Unit', connected: true },
+    drive: away ? 'paused' : held ? 'hold' : 'auto',
+  };
+}
+
 /** The whole scripted session, in order. */
 export function demoEvents(scenario: DemoScenario = 'edge', loop = 0): SessionEvent[] {
   const script = SCRIPTS[scenario];
-  const sessionId = `ls_demo${LETTER[scenario]}${String(loop).padStart(15, '0')}`;
+  const sessionId = sessionIdOf(scenario, loop);
   const events: SessionEvent[] = [];
   let sequence = 0;
   const start = Date.UTC(2026, 9, 19, 20, 0, 0);
@@ -118,6 +204,9 @@ export function demoEvents(scenario: DemoScenario = 'edge', loop = 0): SessionEv
   // After a call, and the fall of imminence after it, a new approach starts only below 0.3.
   let settling = false;
   let awayFrom: number | null = null;
+  let lastDevice = '';
+  let lastDeviceAt = -Infinity;
+  let lastLevel: number | null = null;
   for (let t = 1; t <= script.durationS; t++) {
     if (t === 30) emit('subject.identified', 30, { sex: 'woman', pWoman: 0.86, secondsObserved: 30, decidedAtS: 30, hint: null, detectors: ['onset_end'] });
     if (t === 62) emit('session.status', 62, { status: 'analyzing', previousStatus: 'calibrating', degraded: false, inputs: { ...inputs, face: { present: true, baselineReady: true } }, endedReason: null }, null);
@@ -130,7 +219,7 @@ export function demoEvents(scenario: DemoScenario = 'edge', loop = 0): SessionEv
       emit('input.warning', t, { code: 'face_not_visible', state: 'cleared', message: 'The face is back in view.', sinceS: awayFrom }, null);
       awayFrom = null;
     }
-    const baselineReady = t >= 62;
+    const baselineReady = t >= BASELINE_S;
     const p30 = baselineReady && !away ? round(Math.max(0.01, Math.min(0.99, eased(script.knots, t) + wobble(t)))) : null;
     const p60 = p30 === null ? null : round(Math.min(0.995, p30 + 0.12 + 0.25 * p30 * (1 - p30)));
     emit('imminence.updated', t, {
@@ -141,9 +230,30 @@ export function demoEvents(scenario: DemoScenario = 'edge', loop = 0): SessionEv
       featuresPresent: away ? 0 : 0.96,
       faceVisible: !away,
       baselineReady,
-      stimulationAware: false,
+      stimulationAware: baselineReady,
       recentCalls: recent.slice(-8),
     }, away ? 'low' : 'high');
+    if (baselineReady) {
+      const face = demoFace(scenario, t);
+      const p = eased(script.knots, t);
+      emit('signals.updated', t, {
+        vocalizationsPerMin: Math.max(0, Math.round(2 + 24 * p ** 1.3 + 3 * Math.sin(t * 0.7))),
+        loudnessAboveBaselineDb: Math.round(1 + 13 * p),
+        contractionsPerMin: null,
+        movement: null,
+        faceRegions: face ? regionsOf(face) : null,
+        face,
+      }, away ? 'low' : 'high');
+      // The device, reported when it changes, and at most every five seconds as its level climbs.
+      const device = deviceAt(scenario, script, t);
+      const key = `${device.state}|${device.mode}|${device.drive}`;
+      if (key !== lastDevice || (t - lastDeviceAt >= 5 && device.level !== lastLevel)) {
+        emit('stimulation.updated', t, { ...device, changedAtS: t }, null);
+        lastDevice = key;
+        lastDeviceAt = t;
+        lastLevel = device.level;
+      }
+    }
     // Edges, counted as the sandbox counts them: up to 0.6, back under 0.3, no call between.
     if (p30 !== null) {
       if (settling && p30 < 0.3) settling = false;
@@ -174,6 +284,8 @@ export interface DemoOptions {
   loop?: boolean;
   /** Start this far in, in stream seconds (skip the baseline minute with 60). */
   fromS?: number;
+  /** The face five times a second, as a stream with `frames: ['face']` sends it. */
+  onFaceFrame?: (frame: FaceFrame) => void;
 }
 
 /** Play a scripted session into `onEvent`; returns a function that stops it. */
@@ -182,20 +294,36 @@ export function playDemo(onEvent: (event: SessionEvent) => void, options: DemoOp
   const speed = Math.max(0.1, options.speed ?? 1);
   const loop = options.loop !== false;
   let timer: ReturnType<typeof setTimeout> | null = null;
+  let frames: ReturnType<typeof setInterval> | null = null;
   let stopped = false;
   let run = 0;
 
   const play = (fromS: number) => {
     const events = demoEvents(scenario, run);
+    const durationS = events[events.length - 1].streamTimeS;
+    const sessionId = sessionIdOf(scenario, run);
     // What happened before the start, at once, so the HUD opens mid-session.
     let i = 0;
     while (i < events.length && events[i].streamTimeS < fromS) onEvent(events[i++]);
     const t0 = Date.now() - (fromS * 1000) / speed;
+    const onFaceFrame = options.onFaceFrame;
+    if (onFaceFrame) {
+      let sawFace = false;
+      frames = setInterval(() => {
+        const atS = ((Date.now() - t0) * speed) / 1000;
+        if (stopped || atS > durationS) return;
+        const face = demoFace(scenario, atS);
+        if (face || sawFace) onFaceFrame({ type: 'face.frame', sessionId, streamTimeS: round(atS, 1), face });
+        sawFace = face !== null;
+      }, 200);
+    }
     const step = () => {
       if (stopped) return;
       const atS = ((Date.now() - t0) * speed) / 1000;
       while (i < events.length && events[i].streamTimeS <= atS) onEvent(events[i++]);
       if (i >= events.length) {
+        if (frames !== null) clearInterval(frames);
+        frames = null;
         if (!loop) return;
         run += 1;
         timer = setTimeout(() => play(options.fromS ?? 0), 4000);
@@ -210,5 +338,6 @@ export function playDemo(onEvent: (event: SessionEvent) => void, options: DemoOp
   return () => {
     stopped = true;
     if (timer !== null) clearTimeout(timer);
+    if (frames !== null) clearInterval(frames);
   };
 }
