@@ -164,6 +164,15 @@ describe('<orgasm-hud>', () => {
     expect(hud.shadowRoot!.querySelectorAll('[role="tab"]')).toHaveLength(0);
     expect(q('.stop')).toBeNull();
     expect(hud.shadowRoot!.querySelectorAll('.page')).toHaveLength(3);
+    expect([...hud.shadowRoot!.querySelectorAll<HTMLElement>('.page')].every((p) => !p.hidden)).toBe(true);
+  });
+
+  it('hides what is hidden, whatever its own display', async () => {
+    const { hud, q } = await mount({ layout: 'panel' }, 'finish', 400);
+    const css = hud.shadowRoot!.querySelector('style')!.textContent!;
+    expect(css).toMatch(/\[hidden\] \{ display: none !important; \}/);
+    expect(q<HTMLElement>('[data-page="timeline"].page')!.hidden).toBe(true);
+    expect(q<HTMLElement>('.strip')!.hidden).toBe(true);
   });
 
   it('gives the bar the trend and the region meters it was asked for', async () => {

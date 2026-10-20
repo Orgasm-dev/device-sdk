@@ -86,6 +86,8 @@ export const THEME_CSS = `
   }
 }
 :host([hidden]) { display: none !important; }
+/* An element's own display (grid, flex) must never override its hidden attribute. */
+[hidden] { display: none !important; }
 *, *::before, *::after { box-sizing: border-box; }
 button { font: inherit; color: inherit; }
 button:focus-visible, a:focus-visible { outline: 2px solid var(--hud-accent); outline-offset: 2px; }
