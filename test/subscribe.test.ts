@@ -118,3 +118,29 @@ describe('subscribe', () => {
     expect(sub.lastEventId).toBe(event(1).id);
   });
 });
+
+describe('face frames', () => {
+  it('asks for them with frames, hands them to onFaceFrame, and neither counts nor resumes from them', async () => {
+    const face = { expression: { jawOpen: 0.4 }, head: { yawDeg: 3, pitchDeg: 0, rollDeg: 0 } };
+    const faceFrame = { type: 'face.frame', sessionId: SESSION, streamTimeS: 61.4, face };
+    const { calls, fetchImpl } = scripted([() => stream([frame(event(1)), `event: face.frame\ndata: ${JSON.stringify(faceFrame)}\n\n`, frame(ended(2))])]);
+    const frames: unknown[] = [];
+    const events: string[] = [];
+    const sub = subscribe({ streamUrl: STREAM, token: 'ct_abc', frames: ['face'], fetchImpl, onEvent: (e) => events.push(e.id), onFaceFrame: (f) => frames.push(f) });
+    expect(await sub.done).toBe('ended');
+    expect(new URL(calls[0].url).searchParams.get('frames')).toBe('face');
+    expect(frames).toEqual([faceFrame]);
+    expect(events).toHaveLength(2);
+    expect(sub.lastEventId).toBe(ended(2).id);
+  });
+
+  it('carries stimulation.updated as an event', async () => {
+    const stimulation = event(1, 'stimulation.updated', { state: 'on', level: 31, levelMax: 60, channels: null, mode: 'waves', changedAtS: 61 });
+    const { fetchImpl } = scripted([() => stream([frame(stimulation), frame(ended(2))])]);
+    const types: string[] = [];
+    const sub = subscribe({ streamUrl: STREAM, token: 'vt_abc', fetchImpl, onEvent: (e) => types.push(e.type) });
+    await sub.done;
+    expect(types).toEqual(['stimulation.updated', 'session.status']);
+  });
+});
+

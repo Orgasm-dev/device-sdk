@@ -13,7 +13,10 @@
   "clock": "0:00",
   "notices": [],
   "marks": [],
-  "analysing": true
+  "analysing": true,
+  "strip": null,
+  "face": null,
+  "timeline": null
  },
  {
   "atS": 15,
@@ -29,7 +32,10 @@
   "clock": "0:15",
   "notices": [],
   "marks": [],
-  "analysing": true
+  "analysing": true,
+  "strip": null,
+  "face": null,
+  "timeline": null
  },
  {
   "atS": 30,
@@ -45,7 +51,10 @@
   "clock": "0:30",
   "notices": [],
   "marks": [],
-  "analysing": true
+  "analysing": true,
+  "strip": null,
+  "face": null,
+  "timeline": null
  },
  {
   "atS": 45,
@@ -61,7 +70,10 @@
   "clock": "0:45",
   "notices": [],
   "marks": [],
-  "analysing": true
+  "analysing": true,
+  "strip": null,
+  "face": null,
+  "timeline": null
  },
  {
   "atS": 60,
@@ -77,7 +89,10 @@
   "clock": "1:00",
   "notices": [],
   "marks": [],
-  "analysing": true
+  "analysing": true,
+  "strip": null,
+  "face": null,
+  "timeline": null
  },
  {
   "atS": 75,
@@ -93,7 +108,10 @@
   "clock": "1:15",
   "notices": [],
   "marks": [],
-  "analysing": true
+  "analysing": true,
+  "strip": null,
+  "face": "Face out of view",
+  "timeline": "60-120 s: imminence, body;"
  },
  {
   "atS": 90,
@@ -109,7 +127,10 @@
   "clock": "1:30",
   "notices": [],
   "marks": [],
-  "analysing": true
+  "analysing": true,
+  "strip": null,
+  "face": "Face out of view",
+  "timeline": "60-120 s: imminence, body;"
  },
  {
   "atS": 105,
@@ -125,7 +146,10 @@
   "clock": "1:45",
   "notices": [],
   "marks": [],
-  "analysing": true
+  "analysing": true,
+  "strip": null,
+  "face": "Face out of view",
+  "timeline": "60-120 s: imminence, body;"
  },
  {
   "atS": 120,
@@ -141,7 +165,10 @@
   "clock": "2:00",
   "notices": [],
   "marks": [],
-  "analysing": true
+  "analysing": true,
+  "strip": null,
+  "face": "Face out of view",
+  "timeline": "60-125 s: imminence, body;"
  },
  {
   "atS": 135,
@@ -157,7 +184,10 @@
   "clock": "2:15",
   "notices": [],
   "marks": [],
-  "analysing": true
+  "analysing": true,
+  "strip": null,
+  "face": "Face out of view",
+  "timeline": "60-140 s: imminence, body;"
  },
  {
   "atS": 150,
@@ -173,7 +203,10 @@
   "clock": "2:30",
   "notices": [],
   "marks": [],
-  "analysing": true
+  "analysing": true,
+  "strip": null,
+  "face": "Face out of view",
+  "timeline": "60-155 s: imminence, body;"
  },
  {
   "atS": 165,
@@ -189,7 +222,10 @@
   "clock": "2:45",
   "notices": [],
   "marks": [],
-  "analysing": true
+  "analysing": true,
+  "strip": null,
+  "face": "Face out of view",
+  "timeline": "60-170 s: imminence, body;"
  },
  {
   "atS": 180,
@@ -205,7 +241,10 @@
   "clock": "3:00",
   "notices": [],
   "marks": [],
-  "analysing": true
+  "analysing": true,
+  "strip": null,
+  "face": "Face out of view",
+  "timeline": "60-185 s: imminence, body;"
  },
  {
   "atS": 195,
@@ -221,7 +260,10 @@
   "clock": "3:15",
   "notices": [],
   "marks": [],
-  "analysing": true
+  "analysing": true,
+  "strip": null,
+  "face": "Face out of view",
+  "timeline": "60-200 s: imminence, body;"
  },
  {
   "atS": 210,
@@ -237,7 +279,10 @@
   "clock": "3:30",
   "notices": [],
   "marks": [],
-  "analysing": true
+  "analysing": true,
+  "strip": null,
+  "face": "Face out of view",
+  "timeline": "60-215 s: imminence, body;"
  },
  {
   "atS": 225,
@@ -253,7 +298,10 @@
   "clock": "3:45",
   "notices": [],
   "marks": [],
-  "analysing": true
+  "analysing": true,
+  "strip": null,
+  "face": "Face out of view",
+  "timeline": "60-230 s: imminence, body;"
  },
  {
   "atS": 240,
@@ -269,7 +317,10 @@
   "clock": "4:00",
   "notices": [],
   "marks": [],
-  "analysing": true
+  "analysing": true,
+  "strip": null,
+  "face": "Face out of view",
+  "timeline": "60-245 s: imminence, body;"
  },
  {
   "atS": 255,
@@ -285,7 +336,10 @@
   "clock": "4:15",
   "notices": [],
   "marks": [],
-  "analysing": true
+  "analysing": true,
+  "strip": null,
+  "face": "Face out of view",
+  "timeline": "60-260 s: imminence, body;"
  },
  {
   "atS": 270,
@@ -301,7 +355,10 @@
   "clock": "4:30",
   "notices": [],
   "marks": [],
-  "analysing": true
+  "analysing": true,
+  "strip": null,
+  "face": "Face out of view",
+  "timeline": "60-275 s: imminence, body;"
  },
  {
   "atS": 285,
@@ -317,7 +374,10 @@
   "clock": "4:45",
   "notices": [],
   "marks": [],
-  "analysing": true
+  "analysing": true,
+  "strip": null,
+  "face": "Face out of view",
+  "timeline": "60-290 s: imminence, body;"
  },
  {
   "atS": 300,
@@ -333,7 +393,10 @@
   "clock": "5:00",
   "notices": [],
   "marks": [],
-  "analysing": true
+  "analysing": true,
+  "strip": null,
+  "face": "Face out of view",
+  "timeline": "60-305 s: imminence, body;"
  },
  {
   "atS": 315,
@@ -349,7 +412,10 @@
   "clock": "5:15",
   "notices": [],
   "marks": [],
-  "analysing": true
+  "analysing": true,
+  "strip": null,
+  "face": "Face out of view",
+  "timeline": "60-320 s: imminence, body;"
  },
  {
   "atS": 330,
@@ -365,7 +431,10 @@
   "clock": "5:30",
   "notices": [],
   "marks": [],
-  "analysing": true
+  "analysing": true,
+  "strip": null,
+  "face": "Face out of view",
+  "timeline": "60-335 s: imminence, body;"
  },
  {
   "atS": 345,
@@ -381,7 +450,10 @@
   "clock": "5:45",
   "notices": [],
   "marks": [],
-  "analysing": true
+  "analysing": true,
+  "strip": null,
+  "face": "Face out of view",
+  "timeline": "60-350 s: imminence, body;"
  },
  {
   "atS": 360,
@@ -397,7 +469,10 @@
   "clock": "6:00",
   "notices": [],
   "marks": [],
-  "analysing": true
+  "analysing": true,
+  "strip": null,
+  "face": "Face out of view",
+  "timeline": "60-365 s: imminence, body;"
  },
  {
   "atS": 375,
@@ -413,7 +488,10 @@
   "clock": "6:15",
   "notices": [],
   "marks": [],
-  "analysing": true
+  "analysing": true,
+  "strip": null,
+  "face": "Face out of view",
+  "timeline": "60-380 s: imminence, body;"
  },
  {
   "atS": 390,
@@ -429,7 +507,10 @@
   "clock": "6:30",
   "notices": [],
   "marks": [],
-  "analysing": true
+  "analysing": true,
+  "strip": null,
+  "face": "Face out of view",
+  "timeline": "60-395 s: imminence, body;"
  },
  {
   "atS": 405,
@@ -445,7 +526,10 @@
   "clock": "6:45",
   "notices": [],
   "marks": [],
-  "analysing": true
+  "analysing": true,
+  "strip": null,
+  "face": "Face out of view",
+  "timeline": "60-410 s: imminence, body;"
  },
  {
   "atS": 420,
@@ -461,7 +545,10 @@
   "clock": "7:00",
   "notices": [],
   "marks": [],
-  "analysing": true
+  "analysing": true,
+  "strip": null,
+  "face": "Face out of view",
+  "timeline": "60-425 s: imminence, body;"
  },
  {
   "atS": 435,
@@ -477,7 +564,10 @@
   "clock": "7:15",
   "notices": [],
   "marks": [],
-  "analysing": true
+  "analysing": true,
+  "strip": null,
+  "face": "Face out of view",
+  "timeline": "60-440 s: imminence, body;"
  },
  {
   "atS": 450,
@@ -493,7 +583,10 @@
   "clock": "7:30",
   "notices": [],
   "marks": [],
-  "analysing": true
+  "analysing": true,
+  "strip": null,
+  "face": "Face out of view",
+  "timeline": "60-455 s: imminence, body;"
  },
  {
   "atS": 465,
@@ -509,7 +602,10 @@
   "clock": "7:45",
   "notices": [],
   "marks": [],
-  "analysing": true
+  "analysing": true,
+  "strip": null,
+  "face": "Face out of view",
+  "timeline": "60-470 s: imminence, body;"
  },
  {
   "atS": 480,
@@ -525,7 +621,10 @@
   "clock": "8:00",
   "notices": [],
   "marks": [],
-  "analysing": true
+  "analysing": true,
+  "strip": null,
+  "face": "Face out of view",
+  "timeline": "60-485 s: imminence, body;"
  },
  {
   "atS": 495,
@@ -541,7 +640,10 @@
   "clock": "8:15",
   "notices": [],
   "marks": [],
-  "analysing": true
+  "analysing": true,
+  "strip": null,
+  "face": "Face out of view",
+  "timeline": "60-500 s: imminence, body;"
  },
  {
   "atS": 510,
@@ -557,7 +659,10 @@
   "clock": "8:30",
   "notices": [],
   "marks": [],
-  "analysing": true
+  "analysing": true,
+  "strip": null,
+  "face": "Face out of view",
+  "timeline": "60-515 s: imminence, body;"
  },
  {
   "atS": 525,
@@ -575,7 +680,10 @@
   "marks": [
    "onset@97%"
   ],
-  "analysing": true
+  "analysing": true,
+  "strip": null,
+  "face": "Face out of view",
+  "timeline": "60-530 s: imminence, body;"
  },
  {
   "atS": 540,
@@ -593,7 +701,10 @@
   "marks": [
    "onset@89%"
   ],
-  "analysing": true
+  "analysing": true,
+  "strip": null,
+  "face": "Face out of view",
+  "timeline": "60-545 s: imminence, body;"
  },
  {
   "atS": 555,
@@ -611,7 +722,10 @@
   "marks": [
    "onset@80%"
   ],
-  "analysing": true
+  "analysing": true,
+  "strip": null,
+  "face": "Face out of view",
+  "timeline": "60-560 s: imminence, body;"
  },
  {
   "atS": 570,
@@ -630,7 +744,10 @@
    "onset@72%",
    "end@92%"
   ],
-  "analysing": true
+  "analysing": true,
+  "strip": null,
+  "face": "Face out of view",
+  "timeline": "60-575 s: imminence, body;"
  },
  {
   "atS": 585,
@@ -649,7 +766,10 @@
    "onset@64%",
    "end@84%"
   ],
-  "analysing": true
+  "analysing": true,
+  "strip": null,
+  "face": "Face out of view",
+  "timeline": "60-590 s: imminence, body;"
  },
  {
   "atS": 600,
@@ -668,7 +788,10 @@
    "onset@55%",
    "end@75%"
   ],
-  "analysing": true
+  "analysing": true,
+  "strip": null,
+  "face": "Face out of view",
+  "timeline": "60-605 s: imminence, body;"
  },
  {
   "atS": 615,
@@ -687,7 +810,10 @@
    "onset@47%",
    "end@67%"
   ],
-  "analysing": true
+  "analysing": true,
+  "strip": null,
+  "face": "Face out of view",
+  "timeline": "60-620 s: imminence, body;"
  },
  {
   "atS": 630,
@@ -706,7 +832,10 @@
    "onset@39%",
    "end@59%"
   ],
-  "analysing": true
+  "analysing": true,
+  "strip": null,
+  "face": "Face out of view",
+  "timeline": "60-635 s: imminence, body;"
  },
  {
   "atS": 645,
@@ -725,7 +854,10 @@
    "onset@30%",
    "end@50%"
   ],
-  "analysing": true
+  "analysing": true,
+  "strip": null,
+  "face": "Face out of view",
+  "timeline": "60-650 s: imminence, body;"
  },
  {
   "atS": 660,
@@ -744,7 +876,10 @@
    "onset@22%",
    "end@42%"
   ],
-  "analysing": true
+  "analysing": true,
+  "strip": null,
+  "face": "Face out of view",
+  "timeline": "60-665 s: imminence, body;"
  },
  {
   "atS": 675,
@@ -763,7 +898,10 @@
    "onset@14%",
    "end@34%"
   ],
-  "analysing": true
+  "analysing": true,
+  "strip": null,
+  "face": "Face out of view",
+  "timeline": "60-680 s: imminence, body;"
  },
  {
   "atS": 690,
@@ -782,7 +920,10 @@
    "onset@5%",
    "end@25%"
   ],
-  "analysing": true
+  "analysing": true,
+  "strip": null,
+  "face": "Face out of view",
+  "timeline": "60-695 s: imminence, body;"
  },
  {
   "atS": 705,
@@ -801,6 +942,9 @@
    "onset@0%",
    "end@20%"
   ],
-  "analysing": false
+  "analysing": false,
+  "strip": null,
+  "face": "Face out of view",
+  "timeline": "60-700 s: imminence, body;"
  }
 ]

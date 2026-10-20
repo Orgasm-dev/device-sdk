@@ -5,3 +5,7 @@ Licensed under the Apache License, Version 2.0 (see LICENSE).
 
 It has no runtime dependencies: everything it does runs on the platform's
 WebCrypto, WebRTC, fetch and its streams, and custom elements.
+
+The face the heads-up display draws (src/hud/face-mesh.ts) is derived from
+the Momentum Human Rig (MHR), Copyright (c) Meta Platforms, Inc. and
+affiliates, licensed under the Apache License, Version 2.0 (see LICENSE-MHR).

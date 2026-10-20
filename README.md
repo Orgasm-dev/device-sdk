@@ -6,7 +6,7 @@ It is the first place your users' video goes, so it is published for you to read
 
 | Entry point | What it is |
 | --- | --- |
-| `@orgasm-dev/device` | Capability, attestation, sealing, publishing, and `subscribe` for the session's events |
+| `@orgasm-dev/device` | Capability, attestation, sealing, publishing, `subscribe` for the session's events, and `reportStimulation` for the device your product drives |
 | `@orgasm-dev/device/capture` | `requestCapture`: the camera and microphone, asked for well, with each refusal named and what to do about it |
 | `@orgasm-dev/device/hud` | `<orgasm-hud>`, `<orgasm-capture-primer>`, and the model a game engine can draw from instead |
 
@@ -38,12 +38,15 @@ const live = await publishLiveSession({ session, capability, stream });
 
 // 4. Show it.
 const hud = document.querySelector('orgasm-hud');
-live.subscribe({ onEvent: (event) => hud.feed(event) });
+live.subscribe({ frames: ['face'], onEvent: (event) => hud.feed(event), onFaceFrame: (frame) => hud.feedFrame(frame) });
 hud.addEventListener('orgasm-hud-stop', () => live.stop({ releaseCamera: true }));
+
+// 5. If your product drives a device, say what it is doing; the HUD shows it beside the person's signals.
+live.reportStimulation({ state: 'on', level: 31, levelMax: 60, mode: 'waves', device: { label: 'Unit' } });
 ```
 
 ```html
-<orgasm-hud layout="rail"></orgasm-hud>
+<orgasm-hud layout="panel"></orgasm-hud>
 ```
 
 [Live sessions](https://orgasm.dev/docs/guides/live-sessions) walks through the whole flow, and [Show the HUD](https://orgasm.dev/docs/guides/hud) every option of the display.
@@ -60,23 +63,37 @@ const subscription = subscribe({ ...streamOf(session), onEvent: (event) => hud.f
 subscription.close();
 ```
 
+### Reporting the device
+
+`live.reportStimulation(report)` tells orgasm.dev what the device your product drives is doing: whether stimulation is on, its `level` and `levelMax`, each output's level (`channels`, up to four), its `mode`, who sets the level (`drive`: `auto`, `manual`, `hold` or `paused`) and whether it is `connected`. A field you leave out keeps its last value, and `null` clears it. Reports are merged and sent at most four times a second, over the session's WebSocket while it is open and over HTTP while it is not, so a dial turned fast sends where it ended up. Each reaches every reader of the session as `stimulation.updated`. On your server, `stimulationReporter({ ...reporterOf(session), token: secretKey })` does the same over HTTP (a secret key never goes in a URL).
+
 ### The display
 
-`<orgasm-hud>` has four layouts: `rail` (a side panel), `bar` (a strip across the page), `card` (a corner of a game) and `overlay` (a panel for a stream). It shows the phase (Calibrating, Building, Rising, Close, Very close; Onset, Peak, Afterglow), the chance of an orgasm within 30 seconds with the 60-second chance as a ghost mark, the last three minutes as a line with each call and edge marked where it happened, the counts of orgasms, ruins and edges, the session's clock, and what needs attention. On the person's device it always shows that analysis is on and a Stop control; only `stream` and the `overlay` layout, drawn into a video for others, leave them out.
+`<orgasm-hud>` has five layouts: `rail` (a side panel), `bar` (a strip across the page), `card` (a corner of a game), `overlay` (a panel for a stream) and `panel` (the whole display: the phase, the gauge and the stimulation strip over three pages, Signals, Face and Timeline, turned with tabs or a swipe). It shows the phase (Calibrating, Building, Rising, Close, Very close; Onset, Peak, Afterglow), the chance of an orgasm within 30 seconds with the 60-second chance as a ghost mark, the last three minutes as a line with each call and edge marked where it happened, the counts of orgasms, ruins and edges, the session's clock, and what needs attention. On the person's device it always shows that analysis is on and a Stop control; only `stream` and the `overlay` layout, drawn into a video for others, leave them out.
 
-- `show="phase gauge percent trend counts clock signals notices subject"` picks the parts; the subject read is never on by default.
+- `show="phase gauge percent trend counts clock signals notices subject stimulation face timeline"` picks the parts; the subject read is never on by default.
+- `stimulation`: the device as your product reports it, its name, its mode in words, who sets the level, and a bar per output.
+- `face`: a generic face (the Momentum Human Rig's mean head, which is no one's) moved by the person's face channels, with the face's seven regions as meters beside it. It reads the channels once a second, and five times a second with `frames: ['face']` (`connect()` asks for them when the part is shown); a view token reads them only when it was made with `includeFace`. The face is a separate chunk of about 37 KB, loaded the first time it is drawn.
+- `timeline`: the whole session (up to three hours, in five-second bins) in three lanes on one time axis: imminence, each output's level with its changes of mode, and the body's rates; each lane draws only once it has something to show.
 - `theme="dark|light|auto"`, `size="sm|md|lg"`, `brand="off"`, and CSS custom properties (`--orgasm-hud-accent`, `--orgasm-hud-surface`, `--orgasm-hud-text`, `--orgasm-hud-font` and the rest) restyle it; `hud.strings = { phases: { close: '…' } }` rewords it.
 - `hud.demo({ scenario: 'edge' })` plays a scripted session, with no network, for a design review or for placing an overlay.
 
 To draw it yourself (a game engine, a canvas), use the model it draws:
 
 ```ts
-import { hudReducer, hudView, initialHudState } from '@orgasm-dev/device/hud';
+import { hudFrameReducer, hudReducer, hudView, initialHudState, loadFaceMesh, poseFace } from '@orgasm-dev/device/hud';
 
 let state = initialHudState();
-subscribe({ ...streamOf(session), onEvent: (event) => (state = hudReducer(state, event)) });
+subscribe({
+  ...streamOf(session),
+  frames: ['face'],
+  onEvent: (event) => (state = hudReducer(state, event)),
+  onFaceFrame: (frame) => (state = hudFrameReducer(state, frame)),
+});
 // every frame, or every second
-const { phase, word, gauge, counts, clock } = hudView(state);
+const { phase, word, gauge, counts, clock, stimulation, timeline, face } = hudView(state);
+// the face's points, to draw the same face natively
+const points = face?.channels ? poseFace(await loadFaceMesh(), face.channels) : null;
 ```
 
 ### Before the browser asks
@@ -111,8 +128,8 @@ npm install
 npm run check   # types, tests, the build and the wording policy
 ```
 
-The tests run in Node on its WebCrypto, and the elements under happy-dom; the seal's test vector is the one the enclave's own tests open, so the two stay byte-compatible. The display's model is held against the sandbox's scenarios (`test/fixtures`, each scenario's events as the sandbox sends them) by golden files in `test/golden`.
+The tests run in Node on its WebCrypto, and the elements under happy-dom; the seal's test vector is the one the enclave's own tests open, so the two stay byte-compatible. The display's model is held against the sandbox's scenarios (`test/fixtures`, each scenario's events as the sandbox sends them, and `toy`, a session with a reporting device) by golden files in `test/golden`. `scripts/face-mesh.mjs` writes `src/hud/face-mesh.ts` from a baked face.
 
 ## License
 
-Apache-2.0 (`LICENSE`, `NOTICE`).
+Apache-2.0 (`LICENSE`, `NOTICE`). The face (`src/hud/face-mesh.ts`) is derived from the Momentum Human Rig, Apache-2.0 too (`LICENSE-MHR`).

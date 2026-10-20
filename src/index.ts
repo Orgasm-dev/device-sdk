@@ -10,6 +10,7 @@
 //   const { stream } = await requestCapture();   // '@orgasm-dev/device/capture'
 //   const live = await publishLiveSession({ session, capability, stream });
 //   live.subscribe({ onEvent: (event) => render(event) });   // imminence, onset, peak, end...
+//   live.reportStimulation({ state: 'on', level: 31, levelMax: 60, mode: 'waves' });   // if your product drives a device
 //   // later: await live.stop({ releaseCamera: true });
 //
 // The device verifies the enclave's attestation against the published policy
@@ -26,6 +27,7 @@ import { newCapability, newClientNonce, verifyEnclave, type AttestationPolicy, t
 import { slotCredential } from './seal.ts';
 import { EnclavePublisher, type PublishState } from './publish.ts';
 import { subscribe, type SubscribeOptions, type Subscription } from './subscribe.ts';
+import { reporterOf, stimulationReporter, type StimulationReport, type StimulationReporter } from './socket.ts';
 
 export {
   newCapability,
@@ -37,8 +39,10 @@ export type { AttestationPolicy, VerifiedEnclave } from './attestation.ts';
 export { EnclavePublisher } from './publish.ts';
 export type { PublishState } from './publish.ts';
 export { subscribe, streamOf } from './subscribe.ts';
-export type { StreamSource, SubscribeOptions, Subscription, SubscriptionDetail, SubscriptionState } from './subscribe.ts';
-export { SESSION_EVENT_TYPES, isSessionEvent, isFinalEvent } from './events.ts';
+export type { FrameKind, StreamSource, SubscribeOptions, Subscription, SubscriptionDetail, SubscriptionState } from './subscribe.ts';
+export { mergeReports, reporterOf, stimulationReporter } from './socket.ts';
+export type { ReporterError, ReporterState, StimulationReport, StimulationReporter, StimulationReporterOptions } from './socket.ts';
+export { FACE_EXPRESSION_CHANNELS, SESSION_EVENT_TYPES, isFaceFrame, isSessionEvent, isFinalEvent } from './events.ts';
 export type * from './events.ts';
 
 /** The `ingest` object a live session returns (specs/openapi.yaml Ingest). */
@@ -83,6 +87,14 @@ export interface LiveHandle {
    * the stream is refused. Kept for 0.1 code: `subscribe` says more.
    */
   events(onEvent: (event: unknown) => void, onError?: (error: Event) => void): () => void;
+  /**
+   * Tell orgasm.dev what the device your product drives is doing: its level,
+   * channels and mode. Merged and sent at most four times a second, over the
+   * session's socket or, while it is down, over HTTP (see `stimulationReporter`).
+   */
+  reportStimulation(report: StimulationReport): void;
+  /** The reporter behind reportStimulation, once a report has been made. */
+  readonly stimulation: StimulationReporter | null;
   /** Hang up. With `releaseCamera`, also stop the stream's tracks, so the camera light goes off. */
   stop(options?: { releaseCamera?: boolean }): Promise<void>;
 }
@@ -125,9 +137,17 @@ export async function publishLiveSession(input: PublishLiveInput): Promise<LiveH
   await publisher.start();
 
   const source = { streamUrl: session.results.streamUrl, token: session.results.clientToken };
+  let reporter: StimulationReporter | null = null;
   return {
     enclave,
     publisher,
+    reportStimulation(report) {
+      reporter ??= stimulationReporter({ ...reporterOf(session), fetchImpl: input.fetchImpl });
+      reporter.report(report);
+    },
+    get stimulation() {
+      return reporter;
+    },
     subscribe(options) {
       return subscribe({ fetchImpl: input.fetchImpl, ...options, ...source });
     },
@@ -143,6 +163,8 @@ export async function publishLiveSession(input: PublishLiveInput): Promise<LiveH
       return () => subscription.close();
     },
     async stop(options) {
+      await reporter?.flush();
+      reporter?.close();
       await publisher.stop();
       if (options?.releaseCamera) for (const track of stream.getTracks()) track.stop();
     },

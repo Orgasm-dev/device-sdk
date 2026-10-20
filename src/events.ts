@@ -117,6 +117,52 @@ export interface FaceRegions {
 
 export type Movement = 'settled' | 'shifting' | 'unsettled';
 
+/** The face's 24 expression channels, in the contract's order. */
+export const FACE_EXPRESSION_CHANNELS = Object.freeze([
+  'eyeBlinkL',
+  'eyeBlinkR',
+  'eyeWideL',
+  'eyeWideR',
+  'browDownL',
+  'browDownR',
+  'browInnerUp',
+  'browOuterUpL',
+  'browOuterUpR',
+  'jawOpen',
+  'lipsPart',
+  'mouthSmileL',
+  'mouthSmileR',
+  'mouthStretch',
+  'mouthPucker',
+  'noseSneer',
+  'noseFlare',
+  'cheekSquintL',
+  'cheekSquintR',
+  'chinRaise',
+  'lidTighten',
+  'browTogether',
+  'noseWrinkle',
+  'lidRaise',
+] as const);
+
+export type FaceExpressionChannel = (typeof FACE_EXPRESSION_CHANNELS)[number];
+
+/** How far the head has turned from the person's resting pose, in degrees, as someone facing them sees it. */
+export interface HeadPose {
+  /** Positive turns the face toward the viewer's right. */
+  yawDeg: number;
+  /** Positive raises the chin. */
+  pitchDeg: number;
+  /** Positive tips the top of the head toward the viewer's right. */
+  rollDeg: number;
+}
+
+/** The face's expression (each channel 0 to 1 from the person's rest) and the head's turn. */
+export interface FaceChannels {
+  expression: Record<FaceExpressionChannel, number> & Record<string, number>;
+  head: HeadPose;
+}
+
 /** The body's other signals, once a second; each is null while its input is absent or still calibrating. */
 export interface SignalsData {
   vocalizationsPerMin: number | null;
@@ -126,11 +172,45 @@ export interface SignalsData {
   /** From the body view only. */
   movement: Movement | null;
   faceRegions: FaceRegions | null;
+  /** The face's channels; null out of view, before the baseline, and for a view token made without includeFace. Absent from servers before 0.3. */
+  face?: FaceChannels | null;
+}
+
+export type StimulationDrive = 'auto' | 'manual' | 'hold' | 'paused';
+
+export interface StimulationChannel {
+  id: string;
+  level: number;
+  levelMax: number | null;
+}
+
+/** The stimulation as your product reported it, each report merged over the ones before. */
+export interface StimulationData {
+  state: 'on' | 'off';
+  intensity: number | null;
+  level: number | null;
+  levelMax: number | null;
+  channels: StimulationChannel[] | null;
+  mode: string | null;
+  modeLabel: string | null;
+  device: { label: string | null; connected: boolean } | null;
+  drive: StimulationDrive | null;
+  /** When the change happened, in stream seconds; the event's `streamTimeS` is when it was received. */
+  changedAtS: number;
+}
+
+/** The face about five times a second, for readers that ask (`frames: ['face']`). Not an event: no id, never replayed. */
+export interface FaceFrame {
+  type: 'face.frame';
+  sessionId: string;
+  streamTimeS: number;
+  face: FaceChannels | null;
 }
 
 export interface EventDataByType {
   'imminence.updated': ImminenceData;
   'signals.updated': SignalsData;
+  'stimulation.updated': StimulationData;
   'orgasm.onset': OrgasmOnsetData;
   'orgasm.peak': OrgasmPeakData;
   'orgasm.end': OrgasmEndData;
@@ -164,6 +244,7 @@ export type SessionEvent = { [T in SessionEventType]: SessionEventOf<T> }[Sessio
 export const SESSION_EVENT_TYPES: readonly SessionEventType[] = Object.freeze([
   'imminence.updated',
   'signals.updated',
+  'stimulation.updated',
   'orgasm.onset',
   'orgasm.peak',
   'orgasm.end',
@@ -184,3 +265,10 @@ export function isSessionEvent(value: unknown): value is SessionEvent {
 
 /** Whether this event ends its session's stream. */
 export const isFinalEvent = (event: SessionEvent): boolean => event.type === 'session.status' && event.data.status === 'ended';
+
+/** Whether a parsed frame is a face frame. */
+export function isFaceFrame(value: unknown): value is FaceFrame {
+  if (!value || typeof value !== 'object') return false;
+  const frame = value as Partial<FaceFrame>;
+  return frame.type === 'face.frame' && typeof frame.sessionId === 'string' && typeof frame.streamTimeS === 'number' && (frame.face === null || (typeof frame.face === 'object' && frame.face !== undefined));
+}
