@@ -147,8 +147,9 @@ ${THEME_CSS}
 .strip .output i { display: block; height: 100%; width: 0; border-radius: 999px; transition: width 0.25s linear; }
 
 /* the face: the generic face moved by the person's channels, and the regions' meters */
-.face { display: grid; grid-template-columns: minmax(0, 1.2fr) minmax(7em, 1fr); gap: 0.9em; align-items: center; }
+.face { display: grid; grid-template-columns: minmax(0, 1fr) minmax(6.5em, 1fr); gap: 0.9em; align-items: center; }
 .face .stage { position: relative; aspect-ratio: 1000 / 1140; max-height: 22em; width: 100%; margin: 0 auto; }
+@container (max-width: 520px) { .face .stage { max-height: 13em; } .face .meters { gap: 0.3em; } }
 .face canvas { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
 .face .stage[data-dim] canvas { opacity: 0.35; }
 .face .away { position: absolute; inset: auto 0 45% 0; text-align: center; font-size: 0.85em; color: var(--hud-muted); }
@@ -156,7 +157,7 @@ ${THEME_CSS}
 .face .meters .region { display: grid; grid-template-columns: 4.6em minmax(0, 1fr); align-items: center; gap: 0.5em; }
 .face .meters .region span { margin: 0; font-size: 0.75em; }
 .face .meters .region .bar { height: 0.4em; }
-@container (max-width: 420px) { .face { grid-template-columns: minmax(0, 1fr); } .face .stage { max-height: 16em; } }
+@container (max-width: 260px) { .face { grid-template-columns: minmax(0, 1fr); } }
 
 /* the timeline: the whole session in three lanes on one time axis */
 .timeline { position: relative; height: 11em; }
@@ -208,15 +209,24 @@ ${THEME_CSS}
   .hud[data-layout="overlay"] { grid-template-columns: minmax(0, 1fr); }
 }
 
-/* panel: the head over three pages */
-.hud[data-layout="panel"] .head { display: grid; gap: 0.6em; }
+/* panel: the head over three pages; wide, the head beside them, a band along the bottom of a scene */
+.hud[data-layout="panel"] .head { display: grid; gap: 0.6em; align-content: start; }
+@container (min-width: 760px) {
+  .hud[data-layout="panel"] { grid-template-columns: minmax(15em, 0.42fr) minmax(0, 1fr); grid-template-rows: auto auto 1fr; column-gap: 1.4em; }
+  .hud[data-layout="panel"] > .top { grid-column: 1 / -1; }
+  .hud[data-layout="panel"] > .head { grid-column: 1; grid-row: 2 / 4; }
+  .hud[data-layout="panel"] > .tabs { grid-column: 2; grid-row: 2; }
+  .hud[data-layout="panel"] > .pages { grid-column: 2; grid-row: 3; }
+  .hud[data-layout="panel"] .face .stage { max-height: 12em; }
+  .hud[data-layout="panel"] .face { grid-template-columns: minmax(0, 0.8fr) minmax(8em, 1.2fr); }
+  .hud[data-layout="panel"] .timeline { height: 9.5em; }
+}
 .tabs { display: flex; gap: 0.3em; border-bottom: 1px solid var(--hud-line); }
 .tabs button { border: 0; background: none; padding: 0.45em 0.8em; margin-bottom: -1px; font-size: 0.85em; font-weight: 600; color: var(--hud-muted); border-bottom: 2px solid transparent; cursor: pointer; }
 .tabs button[aria-selected="true"] { color: var(--hud-text); border-bottom-color: var(--hud-accent); }
 .pages { display: grid; touch-action: pan-y; }
 .page { display: grid; gap: 0.75em; align-content: start; min-width: 0; }
 .hud[data-stream][data-layout="panel"] .pages { grid-template-columns: repeat(auto-fit, minmax(17em, 1fr)); gap: 1.2em; }
-.hud[data-stream][data-layout="panel"] .page[hidden] { display: grid; }
 `;
 
 interface StripRefs {
@@ -682,7 +692,8 @@ export class OrgasmHud extends ElementBase {
     const r = this.refs;
     if (!r?.pages) return;
     const page = this.page;
-    for (const [name, el] of r.pages) el.hidden = name !== page;
+    // In a stream, with nothing to press, every page shows.
+    for (const [name, el] of r.pages) el.hidden = !this.stream && name !== page;
     if (r.tabs) for (const [name, tab] of r.tabs) setAttr(tab, 'aria-selected', name === page ? 'true' : 'false');
     if (page === 'face') this.drawFaceNow();
   }
@@ -922,7 +933,7 @@ export class OrgasmHud extends ElementBase {
       tl.stimulation.modes.forEach((mode, i) => {
         const x = (mode.x * 300).toFixed(1);
         nodes.push(svg('line', { class: 'mode', x1: x, x2: x, y1: st.top.toFixed(1), y2: (st.top + st.height).toFixed(1) }));
-        labels.push(h('span', { class: 'mode-label', style: `left:${(mode.x * 100).toFixed(2)}%;top:${(st.top + 1 + (i % 2) * 9).toFixed(1)}%` }, mode.label));
+        labels.push(h('span', { class: 'mode-label', style: `left:${(mode.x * 100).toFixed(2)}%;bottom:${(100 - st.top - st.height + 1 + (i % 2) * 9).toFixed(1)}%` }, mode.label));
       });
     }
     const body = boxes.body;
