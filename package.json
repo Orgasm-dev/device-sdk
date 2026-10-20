@@ -1,6 +1,6 @@
 {
   "name": "@orgasm-dev/device",
-  "version": "0.3.1",
+  "version": "0.3.2",
   "description": "The orgasm.dev device SDK: verify the enclave's attestation, seal every request to it, publish the front camera and microphone straight to it, read the session's events, and show them in a heads-up display.",
   "license": "Apache-2.0",
   "type": "module",
@@ -35,7 +35,9 @@
     "README.md"
   ],
   "sideEffects": [
+    "./dist/hud/index.js",
     "./dist/hud/register.js",
+    "./src/hud/index.ts",
     "./src/hud/register.ts"
   ],
   "scripts": {
