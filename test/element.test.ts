@@ -186,7 +186,13 @@ describe('<orgasm-hud>', () => {
   it('asks for face frames when it shows the face, and moves the face with them', async () => {
     const events = fixture('toy').filter((e) => e.streamTimeS <= 200);
     const last = events[events.length - 1];
-    const faceFrame = { type: 'face.frame', sessionId: last.sessionId, streamTimeS: 200.2, face: { expression: { jawOpen: 0.9 }, head: { yawDeg: 4, pitchDeg: 0, rollDeg: 0 } } };
+    const faceFrame = {
+      type: 'face.frame',
+      sessionId: last.sessionId,
+      streamTimeS: 200.2,
+      face: { expression: { jawOpen: 0.9 }, head: { yawDeg: 4, pitchDeg: 0, rollDeg: 0 } },
+      cameraHead: { yawDeg: 4, pitchDeg: -10, rollDeg: 85 },
+    };
     const body = new ReadableStream<Uint8Array>({
       start(controller) {
         for (const e of events) controller.enqueue(new TextEncoder().encode(`id: ${e.id}\nevent: ${e.type}\ndata: ${JSON.stringify(e)}\n\n`));
@@ -202,6 +208,7 @@ describe('<orgasm-hud>', () => {
     expect(new URL(asked).searchParams.get('frames')).toBe('face');
     expect(hud.state.face).toMatchObject({ source: 'frame', channels: { expression: { jawOpen: 0.9 } } });
     expect(hud.view.face!.regions!.find((r) => r.key === 'jaw')!.level).toBe(0.9);
+    expect(hud.view.face!.cameraHead).toEqual({ yawDeg: 4, pitchDeg: -10, rollDeg: 85 });
     hud.disconnect();
   });
 });

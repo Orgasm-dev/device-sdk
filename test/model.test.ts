@@ -22,7 +22,7 @@ import {
   modeWords,
   type HudState,
 } from '../src/hud/model.ts';
-import { demoEvents, demoFace } from '../src/hud/demo.ts';
+import { demoCameraHead, demoEvents, demoFace } from '../src/hud/demo.ts';
 
 const fixture = (name: string): SessionEvent[] => JSON.parse(readFileSync(new URL(`./fixtures/${name}.json`, import.meta.url), 'utf8'));
 const T0 = Date.UTC(2026, 9, 19, 20, 0, 0);
@@ -136,6 +136,19 @@ describe('the face', () => {
     // A server before the face channels sends none: no face part to draw.
     const older = hudReducer(initialHudState(), { ...signals(100, null), data: { vocalizationsPerMin: 4, loudnessAboveBaselineDb: null, contractionsPerMin: null, movement: null, faceRegions: null } } as SessionEvent, T0);
     expect(hudView(older, T0).face).toBeNull();
+  });
+
+  it('turns the head as the camera sees it where frames say so, before the baseline too, and by the channels otherwise', () => {
+    const sessionId = 'ls_8f3kq2m7x9w4c1n6t5ra';
+    const onItsSide = { yawDeg: 4, pitchDeg: -6, rollDeg: 88 };
+    let state = hudFrameReducer(initialHudState(), { type: 'face.frame', sessionId, streamTimeS: 30.2, face: null, cameraHead: onItsSide }, T0);
+    expect(hudView(state, T0).face).toMatchObject({ channels: null, cameraHead: onItsSide, detail: 'The face shows once the baseline is in' });
+    state = hudFrameReducer(state, { type: 'face.frame', sessionId, streamTimeS: 100.4, face: faceWith(0.6), cameraHead: onItsSide }, T0 + 200);
+    expect(hudView(state, T0 + 200).face).toMatchObject({ cameraHead: onItsSide, channels: { expression: { jawOpen: 0.6 } } });
+    // A frame from an older server has none; nor has the reading's copy once frames stop; nor a face gone stale.
+    expect(hudView(hudFrameReducer(state, { type: 'face.frame', sessionId, streamTimeS: 100.6, face: faceWith(0.6) }, T0 + 400), T0 + 400).face!.cameraHead).toBeNull();
+    expect(hudView(hudReducer(state, signals(105, faceWith(0.3)), T0 + 200 + FRAME_HOLD_MS + 1), T0 + 4000).face!.cameraHead).toBeNull();
+    expect(hudView(state, T0 + 200 + HUD_FRESH_MS + 1).face!.cameraHead).toBeNull();
   });
 });
 
@@ -275,5 +288,9 @@ describe('the demo', () => {
     expect(demoFace('face-lost', 170)).toBeNull();
     expect(demoFace('edge', 30)).toBeNull();
     expect(demoFace('edge', 140)!.expression.jawOpen).toBeGreaterThan(demoFace('edge', 70)!.expression.jawOpen);
+    // The camera's head is there from the first second in view, the face's own head where both are.
+    expect(demoCameraHead('edge', 30)).not.toBeNull();
+    expect(demoCameraHead('face-lost', 170)).toBeNull();
+    expect(demoCameraHead('edge', 140)).toEqual(demoFace('edge', 140)!.head);
   });
 });

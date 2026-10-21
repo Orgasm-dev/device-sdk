@@ -73,7 +73,7 @@ subscription.close();
 
 - `show="phase gauge percent trend counts clock signals notices subject stimulation face timeline"` picks the parts; the subject read is never on by default.
 - `stimulation`: the device as your product reports it, its name, its mode in words, who sets the level, and a bar per output.
-- `face`: a generic face (the Momentum Human Rig's mean head, which is no one's) moved by the person's face channels, with the face's seven regions as meters beside it. It reads the channels once a second, and five times a second with `frames: ['face']` (`connect()` asks for them when the part is shown); a view token reads them only when it was made with `includeFace`. The face is a separate chunk of about 37 KB, loaded the first time it is drawn.
+- `face`: a generic face (the Momentum Human Rig's mean head, which is no one's, its two sides each other's mirror) moved by the person's face channels, with the face's seven regions as meters beside it. It reads the channels once a second, and five times a second with `frames: ['face']` (`connect()` asks for them when the part is shown); a view token reads them only when it was made with `includeFace`. Where frames carry the head as the camera sees it (`cameraHead`), the head is drawn by that, past a neck's limits: a head held tilted, or lying on its side, is drawn as it is, and from before the baseline, a face at rest under the waiting words. The face is a separate chunk of about 37 KB, loaded the first time it is drawn.
 - `timeline`: the whole session (up to three hours, in five-second bins) in three lanes on one time axis: imminence, each output's level with its changes of mode, and the body's rates; each lane draws only once it has something to show.
 - `theme="dark|light|auto"`, `size="sm|md|lg"`, `brand="off"`, and CSS custom properties (`--orgasm-hud-accent`, `--orgasm-hud-surface`, `--orgasm-hud-text`, `--orgasm-hud-font` and the rest) restyle it; `hud.strings = { phases: { close: '…' } }` rewords it.
 - `hud.demo({ scenario: 'edge' })` plays a scripted session, with no network, for a design review or for placing an overlay.
@@ -92,9 +92,11 @@ subscribe({
 });
 // every frame, or every second
 const { phase, word, gauge, counts, clock, stimulation, timeline, face } = hudView(state);
-// the face's points, to draw the same face natively
-const points = face?.channels ? poseFace(await loadFaceMesh(), face.channels) : null;
+// the face's points, to draw the same face natively: its head as the camera sees it where a frame says so
+const points = face?.channels ? poseFace(await loadFaceMesh(), face.channels, undefined, undefined, { cameraHead: face.cameraHead }) : null;
 ```
+
+`headGlideTo` and `headAt` glide `cameraHead` between frames the short way round, beside `glideTo` and `faceAt` for the channels; `poseFace(…, { gains: false })` draws each channel at its value alone, for a face orgasm.dev did not measure.
 
 ### Before the browser asks
 

@@ -22,7 +22,7 @@
 // frames come: a frame outranks the readings' copy for FRAME_HOLD_MS.
 
 import type {
-  EndedReason, EventMode, FaceChannels, FaceFrame, FaceRegions, LiveSessionStatus, Movement, SessionEvent, SignalsData, StimulationData, SubjectSex, WarningCode,
+  CameraHeadPose, EndedReason, EventMode, FaceChannels, FaceFrame, FaceRegions, LiveSessionStatus, Movement, SessionEvent, SignalsData, StimulationData, SubjectSex, WarningCode,
 } from '../events.ts';
 
 export type HudPhase =
@@ -105,6 +105,8 @@ export interface HudHistory {
 export interface HudFace {
   /** Null while the face is out of view. */
   channels: FaceChannels | null;
+  /** The head as the camera sees it, from a frame that says it; a reading's copy has none. */
+  cameraHead?: CameraHeadPose | null;
   atS: number;
   /** The receiving clock (ms). */
   receivedAt: number;
@@ -323,7 +325,7 @@ export function hudReducer(state: HudState, event: SessionEvent, receivedAt: num
       }));
       // A server before the face channels sends no `face`; a fresh frame outranks the reading's copy.
       const frameHeld = state.face?.source === 'frame' && receivedAt - state.face.receivedAt < FRAME_HOLD_MS;
-      if (d.face !== undefined && !frameHeld) next.face = { channels: d.face, atS: event.streamTimeS, receivedAt, source: 'reading' };
+      if (d.face !== undefined && !frameHeld) next.face = { channels: d.face, cameraHead: null, atS: event.streamTimeS, receivedAt, source: 'reading' };
       break;
     }
     case 'stimulation.updated':
@@ -340,7 +342,11 @@ export function hudReducer(state: HudState, event: SessionEvent, receivedAt: num
 /** The state after a face frame: the face between readings. A frame of another session is ignored. */
 export function hudFrameReducer(state: HudState, frame: FaceFrame, receivedAt: number = Date.now()): HudState {
   if (state.sessionId !== null && frame.sessionId !== state.sessionId) return state;
-  return { ...state, sessionId: frame.sessionId, face: { channels: frame.face, atS: frame.streamTimeS, receivedAt, source: 'frame' } };
+  return {
+    ...state,
+    sessionId: frame.sessionId,
+    face: { channels: frame.face, cameraHead: frame.cameraHead ?? null, atS: frame.streamTimeS, receivedAt, source: 'frame' },
+  };
 }
 
 export interface HudStrings {
@@ -530,6 +536,8 @@ export interface HudRegion {
 export interface HudFaceView {
   /** What to draw, or null while the face is out of view. */
   channels: FaceChannels | null;
+  /** The head as the camera sees it, to turn the head by where a frame says it: with the channels, or before the baseline without them. */
+  cameraHead: CameraHeadPose | null;
   /** The seven regions, read from the channels. */
   regions: HudRegion[] | null;
   source: 'reading' | 'frame';
@@ -628,6 +636,7 @@ function faceView(state: HudState, strings: HudStrings, now: number): HudFaceVie
   const regions = channels ? faceRegionsOf(channels) : null;
   return {
     channels,
+    cameraHead: stale ? null : (face.cameraHead ?? null),
     regions: regions ? REGION_KEYS.map((key) => ({ key, label: strings.regions[key], level: regions[key] })) : null,
     source: face.source,
     stale,

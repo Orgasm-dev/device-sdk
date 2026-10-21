@@ -7,6 +7,7 @@
 //
 //   import { hudReducer, hudFrameReducer, hudView, initialHudState } from '@orgasm-dev/device/hud';
 //   import { loadFaceMesh, poseFace } from '@orgasm-dev/device/hud';   // the face's points, to draw natively
+//   import { headAt, headGlideTo } from '@orgasm-dev/device/hud';      // a frame's cameraHead, glided the short way round
 
 import './register.ts';
 
@@ -51,9 +52,28 @@ export type {
 } from './model.ts';
 export { CONNECTION_STRINGS, DEFAULT_PARTS, HUD_LAYOUTS, HUD_PAGES, HUD_PARTS, OrgasmHud, defineHud } from './element.ts';
 export type { HudConnection, HudLayout, HudPage, HudPart } from './element.ts';
-export { FACE_BOX, FACE_LIGHTS, GLIDE_MAX_MS, GLIDE_MIN_MS, HEAD_LIMIT_DEG, drawFace, faceAt, glideTo, headRotation, lightLevels, loadFaceMesh, poseFace } from './face.ts';
-export type { DrawFaceOptions, FaceGlide, FaceMesh, FacePalette, FaceTone } from './face.ts';
+export {
+  CAMERA_HEAD_LIMIT_DEG,
+  FACE_AT_REST,
+  FACE_BOX,
+  FACE_LIGHTS,
+  GLIDE_MAX_MS,
+  GLIDE_MIN_MS,
+  HEAD_LIMIT_DEG,
+  cameraRotation,
+  drawFace,
+  faceAt,
+  glideTo,
+  headAt,
+  headGlideTo,
+  headGliding,
+  headRotation,
+  lightLevels,
+  loadFaceMesh,
+  poseFace,
+} from './face.ts';
+export type { DrawFaceOptions, FaceGlide, FaceMesh, FacePalette, FaceTone, HeadGlide, PoseFaceOptions } from './face.ts';
 export { OrgasmCapturePrimer, PRIMER_STRINGS, definePrimer } from './primer.ts';
 export type { PrimerState, PrimerStrings, PrimerVerified } from './primer.ts';
-export { DEMO_SCENARIOS, demoEvents, demoFace, playDemo } from './demo.ts';
+export { DEMO_SCENARIOS, demoCameraHead, demoEvents, demoFace, playDemo } from './demo.ts';
 export type { DemoOptions, DemoScenario } from './demo.ts';
