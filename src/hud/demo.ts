@@ -8,7 +8,18 @@
 //
 //   const stop = playDemo((event) => hud.feed(event), { scenario: 'edge', speed: 4, onFaceFrame: (f) => hud.feedFrame(f) });
 
-import { FACE_EXPRESSION_CHANNELS, type FaceChannels, type FaceExpressionChannel, type FaceFrame, type FaceRegions, type SessionEvent, type SessionEventOf, type SessionEventType, type StimulationData } from '../events.ts';
+import {
+  FACE_EXPRESSION_CHANNELS,
+  type CameraHeadPose,
+  type FaceChannels,
+  type FaceExpressionChannel,
+  type FaceFrame,
+  type FaceRegions,
+  type SessionEvent,
+  type SessionEventOf,
+  type SessionEventType,
+  type StimulationData,
+} from '../events.ts';
 
 export type DemoScenario = 'edge' | 'finish' | 'ruin' | 'face-lost';
 
@@ -84,6 +95,22 @@ const EXPRESSION: Record<FaceExpressionChannel, [number, number]> = {
   cheekSquintR: [0.08, 0.52], chinRaise: [0.04, 0.26], lidTighten: [0.06, 0.5], browTogether: [0.04, 0.4], noseWrinkle: [0.03, 0.35], lidRaise: [0.04, 0.3],
 };
 
+/** The demo's head: a sway that grows as the session builds, as the sandbox's does. */
+function headSway(script: Script, t: number): CameraHeadPose {
+  const drive = eased(script.knots, t);
+  return {
+    yawDeg: round(6 * Math.sin(t / 1.7 + 0.4) + 3 * drive * Math.sin(t * 1.9 + 1.2), 1),
+    pitchDeg: round(2.5 * Math.sin(t / 2.1 + 2) + 8 * drive - 2, 1),
+    rollDeg: round(3.5 * Math.sin(t / 1.4 + 0.9) + 2 * drive * Math.sin(t * 2.7 + 0.3), 1),
+  };
+}
+
+/** The head as the camera sees it: the person rests square to the camera, so the sway itself; from the first second in view, null while away. */
+export function demoCameraHead(scenario: DemoScenario, t: number): CameraHeadPose | null {
+  const script = SCRIPTS[scenario];
+  return awayAt(script, t) ? null : headSway(script, t);
+}
+
 /** The demo's face at a stream moment: null before the baseline and while away; a function of time, so readings and frames agree. */
 export function demoFace(scenario: DemoScenario, t: number): FaceChannels | null {
   const script = SCRIPTS[scenario];
@@ -98,14 +125,7 @@ export function demoFace(scenario: DemoScenario, t: number): FaceChannels | null
       return [name, round(name.startsWith('eyeBlink') ? Math.max(value, blink) : value, 2)];
     }),
   ) as FaceChannels['expression'];
-  return {
-    expression,
-    head: {
-      yawDeg: round(6 * Math.sin(t / 1.7 + 0.4) + 3 * drive * Math.sin(t * 1.9 + 1.2), 1),
-      pitchDeg: round(2.5 * Math.sin(t / 2.1 + 2) + 8 * drive - 2, 1),
-      rollDeg: round(3.5 * Math.sin(t / 1.4 + 0.9) + 2 * drive * Math.sin(t * 2.7 + 0.3), 1),
-    },
-  };
+  return { expression, head: headSway(script, t) };
 }
 
 const REGIONS: Record<keyof FaceRegions, FaceExpressionChannel[]> = {
@@ -313,8 +333,10 @@ export function playDemo(onEvent: (event: SessionEvent) => void, options: DemoOp
         const atS = ((Date.now() - t0) * speed) / 1000;
         if (stopped || atS > durationS) return;
         const face = demoFace(scenario, atS);
-        if (face || sawFace) onFaceFrame({ type: 'face.frame', sessionId, streamTimeS: round(atS, 1), face });
-        sawFace = face !== null;
+        const cameraHead = demoCameraHead(scenario, atS);
+        const drawn = face !== null || cameraHead !== null;
+        if (drawn || sawFace) onFaceFrame({ type: 'face.frame', sessionId, streamTimeS: round(atS, 1), face, cameraHead });
+        sawFace = drawn;
       }, 200);
     }
     const step = () => {

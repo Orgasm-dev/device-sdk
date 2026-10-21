@@ -163,6 +163,20 @@ export interface FaceChannels {
   head: HeadPose;
 }
 
+/**
+ * The head's own angles against a face square to the camera, in degrees, with
+ * HeadPose's senses: not its turn from the resting pose, so a head held
+ * tilted, or lying on its side, reads as it is.
+ */
+export interface CameraHeadPose {
+  /** Positive turns the face toward the viewer's right; within 180 either way. */
+  yawDeg: number;
+  /** Positive raises the chin; within 90 either way. */
+  pitchDeg: number;
+  /** Positive tips the top of the head toward the viewer's right; within 180 either way, a head on its side about 90. */
+  rollDeg: number;
+}
+
 /** The body's other signals, once a second; each is null while its input is absent or still calibrating. */
 export interface SignalsData {
   vocalizationsPerMin: number | null;
@@ -204,7 +218,10 @@ export interface FaceFrame {
   type: 'face.frame';
   sessionId: string;
   streamTimeS: number;
+  /** Null out of view and before the baseline. */
   face: FaceChannels | null;
+  /** The head as the camera sees it, whenever the face is in view, before the baseline too; null out of view. Absent from older servers. */
+  cameraHead?: CameraHeadPose | null;
 }
 
 export interface EventDataByType {

@@ -21,7 +21,7 @@
 // anything on a device.
 
 import { subscribe, type StreamSource, type SubscribeOptions, type Subscription, type SubscriptionState } from '../subscribe.ts';
-import type { FaceChannels, FaceFrame, SessionEvent } from '../events.ts';
+import type { CameraHeadPose, FaceChannels, FaceFrame, SessionEvent } from '../events.ts';
 import {
   HUD_STRINGS,
   hudFrameReducer,
@@ -37,7 +37,22 @@ import {
   type HudView,
 } from './model.ts';
 import { playDemo, type DemoOptions } from './demo.ts';
-import { drawFace, faceAt, gliding, glideTo, loadFaceMesh, rgbOf, type FaceGlide, type FaceMesh, type FacePalette } from './face.ts';
+import {
+  FACE_AT_REST,
+  drawFace,
+  faceAt,
+  gliding,
+  glideTo,
+  headAt,
+  headGlideTo,
+  headGliding,
+  loadFaceMesh,
+  rgbOf,
+  type FaceGlide,
+  type FaceMesh,
+  type FacePalette,
+  type HeadGlide,
+} from './face.ts';
 import { ElementBase, THEME_CSS, define, h, setAttr, setText, svg } from './dom.ts';
 
 export type HudLayout = 'rail' | 'bar' | 'card' | 'overlay' | 'panel';
@@ -362,6 +377,8 @@ export class OrgasmHud extends ElementBase {
   private meshLoading = false;
   private glide: FaceGlide | null = null;
   private faceTarget: FaceChannels | null = null;
+  private headGlide: HeadGlide | null = null;
+  private headTarget: CameraHeadPose | null = null;
   private faceFrame: number | null = null;
   private palette: FacePalette | null = null;
   private poseBuffer: Float32Array | null = null;
@@ -468,6 +485,8 @@ export class OrgasmHud extends ElementBase {
     this.lastPhase = null;
     this.glide = null;
     this.faceTarget = null;
+    this.headGlide = null;
+    this.headTarget = null;
     this.schedule();
   }
 
@@ -834,15 +853,25 @@ export class OrgasmHud extends ElementBase {
     setText(face.away, fv ? fv.detail : this._strings.faceWaiting);
     setAttr(face.stage, 'data-dim', fv?.channels ? null : '');
     this.paintRegions(face.meters, fv?.regions ?? null);
+    const now = Date.now();
+    let changed = false;
+    // The camera's head glides beside the face; without one (a reading's copy, an older server, out of view) the face's own head turns it.
+    const head = fv?.cameraHead ?? null;
+    if (head !== this.headTarget) {
+      this.headTarget = head;
+      this.headGlide = headGlideTo(this.headGlide, head, now, reducedMotion());
+      changed = true;
+    }
     const target = fv?.channels ?? null;
     if (target && target !== this.faceTarget) {
       this.faceTarget = target;
-      this.glide = glideTo(this.glide, target, Date.now(), reducedMotion());
-      this.drawFaceNow();
+      this.glide = glideTo(this.glide, target, now, reducedMotion());
+      changed = true;
     } else if (!target && this.faceTarget) {
       this.faceTarget = null;
-      this.drawFaceNow();
+      changed = true;
     }
+    if (changed) this.drawFaceNow();
   }
 
   /** Draws the face, and keeps drawing while it glides; loads the mesh the first time. */
@@ -875,15 +904,17 @@ export class OrgasmHud extends ElementBase {
       face.canvas.height = Math.round(height * dpr);
     }
     const now = Date.now();
-    // Out of view, the last face stays, dimmed (the stage's data-dim), under the words.
+    // Out of view, the last face stays, dimmed (the stage's data-dim), under the words. Before the baseline the camera's
+    // head turns a face at rest, dimmed the same way, so a head held tilted through the baseline is drawn as it is.
     const channels = this.glide ? faceAt(this.glide, now) : null;
-    if (!channels) {
+    const cameraHead = this.headGlide ? headAt(this.headGlide, now) : null;
+    if (!channels && !cameraHead) {
       ctx.setTransform(1, 0, 0, 1, 0, 0);
       ctx.clearRect(0, 0, face.canvas.width, face.canvas.height);
       return;
     }
-    drawFace(ctx, this.mesh, channels, this.faceOptions(width, height, dpr));
-    if (gliding(this.glide, now) && typeof requestAnimationFrame === 'function' && this.faceFrame === null) {
+    drawFace(ctx, this.mesh, channels ?? FACE_AT_REST, { ...this.faceOptions(width, height, dpr), cameraHead });
+    if ((gliding(this.glide, now) || headGliding(this.headGlide, now)) && typeof requestAnimationFrame === 'function' && this.faceFrame === null) {
       this.faceFrame = requestAnimationFrame(() => {
         this.faceFrame = null;
         this.drawFaceNow();

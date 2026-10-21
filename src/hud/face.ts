@@ -7,12 +7,16 @@
 // Every point is its resting place plus each channel's displacement at the
 // channel's value (0 to 1) times the channel's drawing gain; the head then
 // turns about the neck by the reading's yaw, pitch and roll, and a point
-// turned away from the viewer fades with its edges. Between readings the
-// face glides from where it was drawn to the newest one over the time
-// readings come apart, so a face read once a second moves slowly and one
-// read five times a second follows the person.
+// turned away from the viewer fades with its edges. Where a frame says how
+// the camera sees the head (`cameraHead`), the head turns by that instead,
+// about its own centre and past a neck's limits, so a head held tilted, or
+// lying on its side, is drawn as it is, from before the baseline too.
+// Between readings the face glides from where it was drawn to the newest
+// one over the time readings come apart, so a face read once a second
+// moves slowly and one read five times a second follows the person; the
+// camera's head glides beside it, the short way round.
 
-import { FACE_EXPRESSION_CHANNELS, type FaceChannels, type FaceExpressionChannel } from '../events.ts';
+import { FACE_EXPRESSION_CHANNELS, type CameraHeadPose, type FaceChannels, type FaceExpressionChannel } from '../events.ts';
 
 export interface FaceMesh {
   count: number;
@@ -46,6 +50,8 @@ export function loadFaceMesh(): Promise<FaceMesh> {
 export const FACE_BOX = Object.freeze({ width: 1000, height: 1140 });
 /** The most the head is drawn turned, in degrees: the turns a neck makes, beyond which a reading is more likely wrong than the head. */
 export const HEAD_LIMIT_DEG = Object.freeze({ yaw: 75, pitch: 60, roll: 45 });
+/** How far the camera's angles go either way: yaw and roll all the way round, the pitch to straight up or down. */
+export const CAMERA_HEAD_LIMIT_DEG = Object.freeze({ yaw: 180, pitch: 90, roll: 180 });
 
 const RAD = Math.PI / 180;
 const clamp = (value: number, low: number, high: number) => Math.min(high, Math.max(low, value));
@@ -58,6 +64,13 @@ const multiply = (a: Matrix, b: Matrix): Matrix => {
   return out;
 };
 
+/** The three turns in the mesh's frame (x right, y down, z toward the viewer), in degrees. */
+function turns(yawDeg: number, pitchDeg: number, rollDeg: number): { ry: Matrix; rx: Matrix; rz: Matrix } {
+  const [yaw, pitch, roll] = [yawDeg * RAD, pitchDeg * RAD, rollDeg * RAD];
+  const [cy, sy, cp, sp, cr, sr] = [Math.cos(yaw), Math.sin(yaw), Math.cos(pitch), Math.sin(pitch), Math.cos(roll), Math.sin(roll)];
+  return { ry: [cy, 0, sy, 0, 1, 0, -sy, 0, cy], rx: [1, 0, 0, 0, cp, -sp, 0, sp, cp], rz: [cr, -sr, 0, sr, cr, 0, 0, 0, 1] };
+}
+
 /**
  * The head's turn as one rotation, yaw first, then pitch, then roll, in the
  * mesh's frame (x right, y down, z toward the viewer): a positive yaw carries
@@ -65,14 +78,33 @@ const multiply = (a: Matrix, b: Matrix): Matrix => {
  * positive roll carries the crown to the viewer's right.
  */
 export function headRotation(head: FaceChannels['head']): Matrix {
-  const yaw = clamp(head.yawDeg, -HEAD_LIMIT_DEG.yaw, HEAD_LIMIT_DEG.yaw) * RAD;
-  const pitch = clamp(head.pitchDeg, -HEAD_LIMIT_DEG.pitch, HEAD_LIMIT_DEG.pitch) * RAD;
-  const roll = clamp(head.rollDeg, -HEAD_LIMIT_DEG.roll, HEAD_LIMIT_DEG.roll) * RAD;
-  const [cy, sy, cp, sp, cr, sr] = [Math.cos(yaw), Math.sin(yaw), Math.cos(pitch), Math.sin(pitch), Math.cos(roll), Math.sin(roll)];
-  const ry: Matrix = [cy, 0, sy, 0, 1, 0, -sy, 0, cy];
-  const rx: Matrix = [1, 0, 0, 0, cp, -sp, 0, sp, cp];
-  const rz: Matrix = [cr, -sr, 0, sr, cr, 0, 0, 0, 1];
+  const { ry, rx, rz } = turns(
+    clamp(head.yawDeg, -HEAD_LIMIT_DEG.yaw, HEAD_LIMIT_DEG.yaw),
+    clamp(head.pitchDeg, -HEAD_LIMIT_DEG.pitch, HEAD_LIMIT_DEG.pitch),
+    clamp(head.rollDeg, -HEAD_LIMIT_DEG.roll, HEAD_LIMIT_DEG.roll),
+  );
   return multiply(rz, multiply(rx, ry));
+}
+
+/**
+ * The head as the camera sees it as one rotation, composed as the analysis
+ * composes its angles: the roll first, then the pitch, then the yaw, with
+ * headRotation's senses and without a neck's limits.
+ */
+export function cameraRotation(head: CameraHeadPose): Matrix {
+  const { ry, rx, rz } = turns(head.yawDeg, clamp(head.pitchDeg, -CAMERA_HEAD_LIMIT_DEG.pitch, CAMERA_HEAD_LIMIT_DEG.pitch), head.rollDeg);
+  return multiply(ry, multiply(rx, rz));
+}
+
+export interface PoseFaceOptions {
+  /** The head as the camera sees it (a frame's `cameraHead`): the head turns by it, about its own centre, instead of by `face.head` about the neck. */
+  cameraHead?: CameraHeadPose | null;
+  /**
+   * Each channel's drawing gain, the size the analysis measures a full
+   * movement at: on by default; false draws each channel at its value alone,
+   * for a face the analysis did not measure.
+   */
+  gains?: boolean;
 }
 
 /**
@@ -82,7 +114,13 @@ export function headRotation(head: FaceChannels['head']): Matrix {
  * face would leave the box it is shifted back, and drawn smaller only past
  * what a shift can do.
  */
-export function poseFace(mesh: FaceMesh, face: FaceChannels, out: Float32Array = new Float32Array(mesh.count * 2), facing?: Float32Array): Float32Array {
+export function poseFace(
+  mesh: FaceMesh,
+  face: FaceChannels,
+  out: Float32Array = new Float32Array(mesh.count * 2),
+  facing?: Float32Array,
+  options: PoseFaceOptions = {},
+): Float32Array {
   const n = mesh.count;
   const xs = new Float64Array(n);
   const ys = new Float64Array(n);
@@ -92,11 +130,12 @@ export function poseFace(mesh: FaceMesh, face: FaceChannels, out: Float32Array =
     ys[i] = mesh.points[3 * i + 1];
     zs[i] = mesh.points[3 * i + 2];
   }
+  const gains = options.gains === false ? null : mesh.gains;
   for (const name of FACE_EXPRESSION_CHANNELS) {
     const value = face.expression[name];
     const delta = mesh.deltas[name];
     if (!value || !delta) continue;
-    const w = clamp(value, 0, 1) * (mesh.gains[name] ?? 1);
+    const w = clamp(value, 0, 1) * (gains?.[name] ?? 1);
     for (let k = 0; k < delta.idx.length; k++) {
       const i = delta.idx[k];
       xs[i] += w * delta.d[3 * k];
@@ -105,8 +144,11 @@ export function poseFace(mesh: FaceMesh, face: FaceChannels, out: Float32Array =
     }
   }
 
-  const m = headRotation(face.head);
-  const [px, py, pz] = mesh.pivot;
+  // The channels turn the head on the neck (the mesh's pivot, under the chin); the camera's angles turn it about its own
+  // centre at the neck's depth, so a head on its side lies on its side in the box rather than swinging out of it.
+  const camera = options.cameraHead ?? null;
+  const m = camera ? cameraRotation(camera) : headRotation(face.head);
+  const [px, py, pz] = camera ? [0, 0, mesh.pivot[2]] : mesh.pivot;
   const turnX = (x: number, y: number, z: number) => m[0] * (x - px) + m[1] * (y - py) + m[2] * (z - pz) + px;
   const turnY = (x: number, y: number, z: number) => m[3] * (x - px) + m[4] * (y - py) + m[5] * (z - pz) + py;
   let minX = Infinity;
@@ -210,6 +252,43 @@ export function glideTo(glide: FaceGlide | null, target: FaceChannels, now: numb
 
 export const gliding = (glide: FaceGlide | null, now: number): boolean => glide !== null && glide.durationMs > 0 && now < glide.startedAt + glide.durationMs;
 
+/** The face at rest, every channel at its zero: what the camera's head turns before the baseline gives the face's own channels. */
+export const FACE_AT_REST: FaceChannels = Object.freeze({
+  expression: Object.freeze(Object.fromEntries(FACE_EXPRESSION_CHANNELS.map((name) => [name, 0]))) as FaceChannels['expression'],
+  head: Object.freeze({ yawDeg: 0, pitchDeg: 0, rollDeg: 0 }),
+});
+
+/** The head as the camera sees it, gliding beside the face and timed as its glide is. A null head is none: the face's own `head` turns it. */
+export interface HeadGlide {
+  from: CameraHeadPose | null;
+  to: CameraHeadPose | null;
+  startedAt: number;
+  durationMs: number;
+  targetAt: number;
+}
+
+/** An angle in [-180, 180). */
+const wrap = (deg: number) => ((((deg + 180) % 360) + 360) % 360) - 180;
+
+/** Where the head is drawn at `now`: yaw and roll the short way round (a head on its side crosses 180 of roll without spinning), the pitch straight. */
+export function headAt(glide: HeadGlide, now: number): CameraHeadPose | null {
+  const { from, to } = glide;
+  if (!from || !to || glide.durationMs <= 0 || now >= glide.startedAt + glide.durationMs) return to;
+  const k = easeOut((now - glide.startedAt) / glide.durationMs);
+  const round = (a: number, b: number) => wrap(a + wrap(b - a) * k);
+  return { yawDeg: round(from.yawDeg, to.yawDeg), pitchDeg: from.pitchDeg + (to.pitchDeg - from.pitchDeg) * k, rollDeg: round(from.rollDeg, to.rollDeg) };
+}
+
+/** A glide of the head toward `target`, timed as glideTo times the face's; from none or to none, and with `instant`, at once. */
+export function headGlideTo(glide: HeadGlide | null, target: CameraHeadPose | null, now: number, instant = false): HeadGlide {
+  const from = glide ? headAt(glide, now) : null;
+  const durationMs = instant || !glide || !from || !target ? 0 : clamp(now - glide.targetAt, GLIDE_MIN_MS, GLIDE_MAX_MS);
+  return { from: from ?? target, to: target, startedAt: now, durationMs, targetAt: now };
+}
+
+export const headGliding = (glide: HeadGlide | null, now: number): boolean =>
+  glide !== null && glide.from !== null && glide.to !== null && glide.durationMs > 0 && now < glide.startedAt + glide.durationMs;
+
 /** The colours a face is drawn in, as [r, g, b]: the wire, and the three a region lights in. */
 export interface FacePalette {
   wire: readonly [number, number, number];
@@ -243,13 +322,17 @@ export interface DrawFaceOptions {
   /** Reused between draws: 2 x the mesh's count. */
   buffer?: Float32Array;
   facing?: Float32Array;
+  /** The head as the camera sees it, to turn the head by instead of `face.head` (PoseFaceOptions). */
+  cameraHead?: CameraHeadPose | null;
+  /** False draws each channel at its value alone (PoseFaceOptions). */
+  gains?: boolean;
 }
 
 /** The face into a 2D context: the wire faintly, the lit regions over it in their tones. */
 export function drawFace(ctx: CanvasRenderingContext2D, mesh: FaceMesh, face: FaceChannels, options: DrawFaceOptions): void {
   const { width, height, dpr, palette } = options;
   const facing = options.facing ?? new Float32Array(mesh.count);
-  const pos = poseFace(mesh, face, options.buffer, facing);
+  const pos = poseFace(mesh, face, options.buffer, facing, { cameraHead: options.cameraHead, gains: options.gains });
   const scale = Math.min(width / FACE_BOX.width, height / FACE_BOX.height);
   const cx = width / 2;
   const cy = height / 2;
